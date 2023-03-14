@@ -12,7 +12,12 @@
     <UploadImages />
   </div>
 </template>
-
+<style>
+.page {
+  height: 100vh;
+  width: 100vw;
+}
+</style>
 <script>
 import SearchView from "@/components/SearchView.vue";
 import LayoutView from "@/components/LayoutView.vue";
@@ -24,7 +29,6 @@ import TabList from "@/components/TabList.vue";
 import UploadImages from "@/components/UploadImages.vue";
 
 //import { HomeView } from "vue";
-
 export default {
   name: "HomeView",
   components: {
