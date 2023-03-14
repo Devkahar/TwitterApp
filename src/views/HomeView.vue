@@ -1,12 +1,21 @@
 <template>
-  <div class="home">
-    <h1>Home Page</h1>
-  </div>
+  <OverlayLoading>
+    <div class="page"></div>
+  </OverlayLoading>
 </template>
-
+<style>
+.page {
+  height: 100vh;
+  width: 100vw;
+}
+</style>
 <script>
+import OverlayLoading from "@/component/OverlayLoading.vue";
+
 export default {
   name: "HomeView",
-  components: {},
+  components: {
+    OverlayLoading,
+  },
 };
 </script>
