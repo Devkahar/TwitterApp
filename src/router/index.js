@@ -59,6 +59,7 @@ const router = new VueRouter({
   routes,
 });
 
+
 router.beforeEach((to, from, next) => {
   const user = store.state.userInfo;
   console.log("user", user);

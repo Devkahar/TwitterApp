@@ -6,11 +6,18 @@
       <Input text="Enter Password" v-model="password" :password="true" />
       <Alert v-if="error" title="Invalid Details" :message="message" />
       <Button :clickHandler="loginHandler" :loading="loading">login!</Button>
+      <p>
+        <router-link to="/signup">Don't have an account? sign up</router-link>
+        <!-- <router-link tag="" active-class="active" to="SignupView" exact
+          ><a></a></router-link
+        > -->
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+
 import Input from "@/components/InputComponent.vue";
 import Button from "@/components/ButtonComponent.vue";
 import Alert from "@/components/AlertComponent.vue";
@@ -22,7 +29,6 @@ export default {
       email: "",
       password: "",
       error: false,
-      message: "",
       loading: false,
     };
   },
@@ -32,7 +38,8 @@ export default {
     Alert,
   },
   methods: {
-    signUpHandler: async function () {
+    loginHandler: async function () {
+
       try {
         this.loading = true;
         const res = await axios.post(`${BASE_URL}/api/user/login`, {

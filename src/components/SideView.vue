@@ -1,3 +1,4 @@
+
 <template>
   <div
     class="lg:275px x width-full border-b border-l border-r border-lighter px-2 lg:px-6 py-2 flex flex-col justify-between static h-screen"
@@ -78,6 +79,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data: function () {

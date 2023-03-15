@@ -8,6 +8,9 @@
       <Input text="Tell Something About You" v-model="bio" :textArea="true" />
       <Alert v-if="error" title="Invalid Details" :message="message" />
       <Button :clickHandler="signUpHandler" :loading="loading">SignUp</Button>
+      <p>
+        <router-link to="/login">Already have an account? login!</router-link>
+      </p>
       <!-- <a-button type="primary" @click="signUpHandler"> Sign Up </a-button> -->
     </div>
   </div>

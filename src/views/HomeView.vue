@@ -1,15 +1,6 @@
 <template>
   <div class="id">
-    <twitter-outlined />
     <HomeComponent />
-    <SearchView />
-    <LayoutView />
-    <SideView />
-    <TweetList />
-    <TrendView />
-    <PostTweet />
-    <TabList />
-    <UploadImages />
   </div>
 </template>
 <style>
@@ -20,6 +11,7 @@
 </style>
 <script>
 import HomeComponent from "@/components/HomeComponent.vue";
+
 import SearchView from "@/components/SearchTweet.vue";
 import LayoutView from "@/components/LayoutView.vue";
 import SideView from "@/components/SideView.vue";
@@ -32,14 +24,7 @@ export default {
   name: "HomeView",
   components: {
     HomeComponent,
-    SearchView,
-    LayoutView,
-    SideView,
-    TweetList,
-    TrendView,
-    PostTweet,
-    TabList,
-    UploadImages,
+    // CreateTweet,
   },
 };
 </script>
