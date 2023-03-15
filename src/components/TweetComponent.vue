@@ -37,7 +37,11 @@ import UserName from "./UsernameComponent.vue";
 import ReplyButton from "./ReplyButton.vue";
 import RetweetButton from "./RetweetButton.vue";
 import LikeButton from "./LikeButton.vue";
-import { BASE_URL, user_img as dummy_img } from "@/helper/constants";
+import {
+  BASE_URL,
+  userProfilePath,
+  user_img as dummy_img,
+} from "@/helper/constants";
 export default {
   data: function () {
     return {
@@ -47,8 +51,8 @@ export default {
   },
   methods: {
     visit_user_profile: function () {
-      if (this.user_id != this.author_id) {
-        this.$router.push({ path: `/${this.author_id}/tweets` });
+      if (this.user_id !== this.author_id) {
+        this.$router.push({ path: userProfilePath(this.user_id) });
       }
     },
   },
@@ -120,7 +124,7 @@ export default {
 
 <style scoped>
 .post_img_box {
-  max-width: 560px;
+  max-width: 510px;
   max-height: 750px;
   width: max-content;
   border-radius: 18px;

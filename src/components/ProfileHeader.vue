@@ -178,8 +178,6 @@ export default {
       required: true,
     },
   },
-  watch: {},
-  mounted: function () {},
 };
 </script>
 

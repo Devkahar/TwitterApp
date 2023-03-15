@@ -10,7 +10,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"HomePage"*/ "@/views/HomeView.vue"),
     meta: {
-      auth: true,
+      guest: true,
     },
   },
   {
@@ -18,6 +18,15 @@ const routes = [
     name: ROUTES_CONSTANTS.SIGNUP_PAGE,
     component: () =>
       import(/* webpageChunkName:"SignUpPage"*/ "@/views/SignupView.vue"),
+    meta: {
+      guest: true,
+    },
+  },
+  {
+    path: "/login",
+    name: ROUTES_CONSTANTS.LOGIN_PAGE,
+    component: () =>
+      import(/* webpageChunkName:"LoginPage"*/ "@/views/LoginView.vue"),
     meta: {
       guest: true,
     },
@@ -52,17 +61,23 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const user = store.state.userInfo;
-  if (to.meta.auth) {
-    if (user && user.token) {
-      next();
-    } else {
-      next({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
-    }
-  } else if (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE && user) {
-    next({ name: ROUTES_CONSTANTS.HOME_PAGE });
-  } else {
-    next();
-  }
+  console.log("user", user);
+  // if (to.meta.auth) {
+  //   if (user && user?.token) {
+  //     next();
+  //   } else {
+  //     next({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
+  //   }
+  // } else if (
+  //   (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE ||
+  //     to.name === ROUTES_CONSTANTS.LOGIN_PAGE) &&
+  //   user
+  // ) {
+  //   next({ name: ROUTES_CONSTANTS.HOME_PAGE });
+  // } else {
+  //   next();
+  // }
+  next();
 });
 
 export default router;
