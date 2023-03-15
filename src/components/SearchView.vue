@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="search-wrapper">
     <SearchView />
     <a-icon type="search" />
@@ -7,10 +7,10 @@
     <button @click="addTodo1(Todotext)" class="btn btn-primary">Search</button>
     <setting-outlined />
   </div>
-  <!-- <div class="settings">
+   <div class="settings">
     <setting-outlined />
   </div> -->
-</template>
+<!-- </template>
 <script></script>
 
 <style scoped>
@@ -39,4 +39,4 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
-</style>
+</style> -->

@@ -113,11 +113,10 @@ export default {
   props: {
     tab: {
       type: String,
-      required: true,
+      default: "tweets",
     },
     userId: {
       type: String,
-      required: true,
     },
   },
   methods: {
@@ -125,7 +124,7 @@ export default {
       try {
         this.loading = true;
         const res = await axios.post(
-          `${BASE_URL}/api/post/tweets/${this.page}`,
+          `${BASE_URL}/api/post/tweets/1`,
           {
             user_id: this.userId,
             like: this.tab === "likes",
