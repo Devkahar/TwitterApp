@@ -1,44 +1,9 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
-</template>
-
-<!-- <script>
-export default {
-  name: "app",
-  components: {},
-  data() {
-    return {
-      tabs: [
-        { icon: "fas fa-home", title: "Home", id: "home" },
-        { icon: "fas fa-hashtag", title: "Explore", id: "explore" },
-        { icon: "far fa-bell", title: "Notifications", id: "notifications" },
-        { icon: "far fa-envelope", title: "Messages", id: "messages" },
-        { icon: "far fa-bookmark", title: "Bookmarks", id: "bookmarks" },
-        { icon: "fas fa-clipboard-list", title: "Lists", id: "lists" },
-        { icon: "far fa-user", title: "Profile", id: "profile" },
-        { icon: "fas fa-ellipsis-h", title: "More", id: "more" },
-      ],
-    };
-  },
-};
-</script> -->
-
-<!-- <style>
-* {
-  font-family: "Roboto", sans-serif;
-}
-</style>
--->
--->
-
-<!-- <template>
   <div class="flex container h-screen w-full">
     <router view />
-    <side nav -->
-<!-- <div
-      class="lg:w-1/5 border-r border-lighter px-2 lg:px-6 py-2 flex flex-col justify-between"
+    <!-- side nav -->
+    <div
+      class="lg:275px x 464px border-r border-lighter px-2 lg:px-6 py-2 flex flex-col justify-between"
     >
       <div>
         <button
@@ -115,15 +80,15 @@ export default {
         </div>
       </div>
     </div>
-    <tweets -->
-<!-- <div class="w-full md:w-1/2 h-full overflow-y-scroll">
+    <!-- tweets -->
+    <div class="w-full md:w-o.5 h-full overflow-y-scroll">
       <div
         class="px-5 py-3 border-b border-lighter flex items-center justify-between"
       >
         <h1 class="text-xl font-bold">Home</h1>
         <i class="far fa-star text-xl text-blue"></i>
       </div>
-      <div class="px-5 py-3 border-b-8 border-lighter flex">
+      <div class="566px x 48px border-b-8 border-lighter flex">
         <div class="flex-none">
           <img
             src="image-user.jpeg"
@@ -192,8 +157,8 @@ export default {
             </div>
           </div>
         </div>
-      </div> -->
-<!-- <div
+      </div>
+      <div
         v-for="follow in following"
         v-bind:key="follow.id"
         @click="() => (id = tab.id)"
@@ -233,11 +198,11 @@ export default {
             </div>
           </div>
         </div>
-      </div> -->
-<!-- <FetchTweets />
+      </div>
+      <FetchTweets />
     </div>
-    < trending -->
-<!-- <div
+    <!-- trending -->
+    <div
       class="md:block hidden w-1/3 h-full border-l border-lighter py-2 px-6 overflow-y-scroll relative"
     >
       <input
@@ -252,8 +217,8 @@ export default {
           <p class="text-lg font-bold">Trends for You</p>
           <i class="fas fa-cog text-lg text-blue"></i>
         </div>
-        <button -->
-<!-- v-for="trend in trending"
+        <button
+          v-for="trend in trending"
           v-bind:key="trend.id"
           @click="() => (id = tab.id)"
           class="w-full flex justify-between hover:bg-lighter p-3 border-t border-lighter"
@@ -388,4 +353,4 @@ export default {
     },
   },
 };
-</script>  -->
+</script>

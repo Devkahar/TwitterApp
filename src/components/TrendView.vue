@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="id">
     <section class="right-menu">
       <form action="#" method="post">
@@ -39,4 +39,4 @@
   padding: 10px 20px 10px 20px;
   overflow-y: scroll;
 }
-</style>
+</style> -->

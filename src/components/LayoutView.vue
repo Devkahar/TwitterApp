@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="flex container h-screen w-full">
     <div class="">
       <div>
@@ -47,4 +47,4 @@
   width: 85%;
   margin: 0 auto;
 }
-</style>
+</style> -->
