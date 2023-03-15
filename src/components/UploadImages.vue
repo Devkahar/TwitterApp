@@ -1,13 +1,13 @@
 <template>
   <div class="images">
     <img src:true class="flex items-center" />
-    <input type="file" accept="image/jpeg" @change="uploadImage" />
+
     <!-- <button @click="img"></button> -->
     <!-- <g-image
       ref="iconImage"
       alt=""
       v-if="$page.post.cover_image"
-      :src="text - lg text - blue mr - 4 far fa - image"
+      :src=
     /> -->
   </div>
 </template>
@@ -32,6 +32,9 @@ export default {
     // onUpload() {
     //   axios.post("my-domain.com/file-upload", this.previewImage);
     // },
+  },
+  imageUpload: function () {
+    this.$emit("uploadImage", this.image);
   },
 };
 </script>

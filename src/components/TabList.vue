@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="tablist">
     <TabList />
     <nav v-bind:class="active" v-on:click.prevent>
@@ -41,4 +41,4 @@ li a {
 li a:hover {
   background-color: #111;
 }
-</style>
+</style> -->

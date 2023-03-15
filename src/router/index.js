@@ -59,6 +59,16 @@ const router = new VueRouter({
   routes,
 });
 
+// const app = new Vue({
+//   router,
+//   methods: {
+//     changeRoute(route) {
+//       // `route` is either a string or object
+//       router.push(route);
+//     },
+//   },
+// });
+
 // router.beforeEach((to, from, next) => {
 //   const user = store.state.userInfo;
 //   if (to.meta.auth) {
