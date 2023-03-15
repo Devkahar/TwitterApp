@@ -6,10 +6,13 @@ const ROUTES_CONSTANTS = {
 };
 
 const BASE_URL = "http://localhost:4000";
-
+const userProfilePath = function (_id) {
+  return `/${_id}/tweet`;
+};
 const user_img = "/uploads/1678780323826-17317730.jpg";
 module.exports = {
   ROUTES_CONSTANTS,
   BASE_URL,
   user_img,
+  userProfilePath,
 };

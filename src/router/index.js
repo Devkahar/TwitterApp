@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { ROUTES_CONSTANTS } from "@/helper/constants";
-// import store from "@/store";
+import store from "@/store";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -10,7 +10,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"HomePage"*/ "@/views/HomeView.vue"),
     meta: {
-      auth: true,
+      guest: true,
     },
   },
   {
@@ -45,7 +45,7 @@ const routes = [
         path: ":tab",
         component: () =>
           import(
-            /* webpageChunkName:"FetchTweets"*/ "@/component/FetchTweets.vue"
+            /* webpageChunkName:"FetchTweets"*/ "@/components/FetchTweets.vue"
           ),
         props: true,
       },
@@ -59,29 +59,26 @@ const router = new VueRouter({
   routes,
 });
 
-// const app = new Vue({
-//   router,
-//   methods: {
-//     changeRoute(route) {
-//       // `route` is either a string or object
-//       router.push(route);
-//     },
-//   },
-// });
 
-// router.beforeEach((to, from, next) => {
-//   const user = store.state.userInfo;
-//   if (to.meta.auth) {
-//     if (user && user?.token) {
-//       next();
-//     } else {
-//       next({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
-//     }
-//   } else if (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE && user) {
-//     next({ name: ROUTES_CONSTANTS.HOME_PAGE });
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const user = store.state.userInfo;
+  console.log("user", user);
+  // if (to.meta.auth) {
+  //   if (user && user?.token) {
+  //     next();
+  //   } else {
+  //     next({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
+  //   }
+  // } else if (
+  //   (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE ||
+  //     to.name === ROUTES_CONSTANTS.LOGIN_PAGE) &&
+  //   user
+  // ) {
+  //   next({ name: ROUTES_CONSTANTS.HOME_PAGE });
+  // } else {
+  //   next();
+  // }
+  next();
+});
 
 export default router;

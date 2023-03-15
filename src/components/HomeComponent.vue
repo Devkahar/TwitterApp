@@ -91,6 +91,7 @@
         <div class="w-full rounded-lg bg-lightest my-4">
           <div class="p-3">
             <p class="text-lg font-bold">Who to Follow</p>
+
           </div>
           <button
             v-for="friend in friends"

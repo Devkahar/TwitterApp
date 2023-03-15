@@ -17,6 +17,9 @@ export default new Vuex.Store({
         },
       };
     },
+    user_id: function (state) {
+      return `${state.userInfo?._id}`;
+    },
   },
   mutations: {},
   actions: {},

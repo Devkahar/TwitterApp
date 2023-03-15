@@ -7,7 +7,9 @@
 <script>
 export default {
   methods: {
-    navBack: function () {},
+    navBack: function () {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
