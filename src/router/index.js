@@ -36,7 +36,7 @@ const routes = [
         path: ":tab",
         component: () =>
           import(
-            /* webpageChunkName:"FetchTweets"*/ "@/component/FetchTweets.vue"
+            /* webpageChunkName:"FetchTweets"*/ "@/components/FetchTweets.vue"
           ),
         props: true,
       },

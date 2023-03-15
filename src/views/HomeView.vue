@@ -10,7 +10,7 @@
 }
 </style>
 <script>
-import OverlayLoading from "@/component/OverlayLoading.vue";
+import OverlayLoading from "@/components/OverlayLoading.vue";
 
 export default {
   name: "HomeView",

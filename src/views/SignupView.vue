@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import Input from "@/component/InputComponent.vue";
-import Button from "@/component/ButtonComponent.vue";
-import Alert from "@/component/AlertComponent.vue";
+import Input from "@/components/InputComponent.vue";
+import Button from "@/components/ButtonComponent.vue";
+import Alert from "@/components/AlertComponent.vue";
 import Validation from "@/helper/validation";
 import axios from "axios";
 import { BASE_URL } from "@/helper/constants";

@@ -1,10 +1,15 @@
 <template>
   <div class="p-5 flex border-bottom">
     <div class="h-12 w-12 rounded">
-      <img :src="`${BASE_URL}${profile_url}`" alt="" class="h-full w-full" />
+      <img :src="user_img" alt="" class="h-full w-full" />
     </div>
     <div class="ml-2 w-full">
-      <UserName :name="name" :subInfo="`@${getUserName}`" :small="true" />
+      <UserName
+        :name="name"
+        :subInfo="`@${getUserName}`"
+        :small="true"
+        :handle_click="visit_user_profile"
+      />
       <p>{{ text }}</p>
       <div class="post_img_box my-3" v-if="post_img !== null">
         <img :src="`${BASE_URL}/${post_img}`" alt="" class="post_img" />
@@ -32,16 +37,30 @@ import UserName from "./UsernameComponent.vue";
 import ReplyButton from "./ReplyButton.vue";
 import RetweetButton from "./RetweetButton.vue";
 import LikeButton from "./LikeButton.vue";
-import { BASE_URL } from "@/helper/constants";
+import { BASE_URL, user_img as dummy_img } from "@/helper/constants";
 export default {
   data: function () {
     return {
       BASE_URL: BASE_URL,
+      user_id: this.$store.getters.user_id,
     };
+  },
+  methods: {
+    visit_user_profile: function () {
+      if (this.user_id != this.author_id) {
+        this.$router.push({ path: `/${this.author_id}/tweets` });
+      }
+    },
   },
   computed: {
     getUserName: function () {
       return this.name.split(" ").join("").toLowerCase();
+    },
+    user_img: function () {
+      if (this.profile_url) {
+        return `${BASE_URL}${this.profile_url}`;
+      }
+      return `${BASE_URL}${dummy_img}`;
     },
   },
   props: {
@@ -83,6 +102,10 @@ export default {
     },
     post_like_handler: {
       type: Function,
+      required: true,
+    },
+    author_id: {
+      type: String,
       required: true,
     },
   },

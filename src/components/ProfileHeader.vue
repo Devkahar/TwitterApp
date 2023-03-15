@@ -18,7 +18,11 @@
         <div class="profile-img-mask h-36 w-36"></div>
       </div>
       <div class="w-full profile-actions mt-6 p-4 flex flex-col items-end">
-        <FollowingButton />
+        <FollowingButton
+          :is_following="data.isFollowing"
+          :click_handler="followHandler"
+          v-if="curr_user !== id"
+        />
       </div>
       <div class="my-4 px-4">
         <UserName :name="data.name" :sub-info="userName" />
@@ -27,27 +31,32 @@
         <p>{{ data.bio }}</p>
       </div>
       <div class="px-4 flex flex-row">
-        <p class="color-light mr-5"><strong>800</strong> Following</p>
-        <p class="color-light"><strong>19.K</strong> Followers</p>
+        <p class="color-light mr-5">
+          <strong>{{ this.data.following }}</strong> Following
+        </p>
+        <p class="color-light">
+          <strong>{{ this.data.followers }}</strong> Followers
+        </p>
       </div>
       <Tab></Tab>
       <router-view :key="$route.path" />
     </div>
-    <Alert v-if="!error && !loading" title="Invalid User" :message="message" />
+    <Alert v-if="error && !loading" title="Invalid User" :message="message" />
   </div>
 </template>
 
 <script>
 import BackCover from "@/assets/bg-cover.jpeg";
 import Profile from "@/assets/profile.jpg";
-import UserName from "@/component/UsernameComponent.vue";
+import UserName from "@/components/UsernameComponent.vue";
 import BackButton from "./BackComponent.vue";
 import FollowingButton from "./FollowingButtonComponent.vue";
 import Location from "@/assets/location.svg";
-import Tab from "@/component/TabComponent.vue";
+import Tab from "@/components/TabComponent.vue";
 import axios from "axios";
 import { BASE_URL, user_img } from "@/helper/constants";
-import Spinner from "@/component/SpinnerComponent.vue";
+import Spinner from "@/components/SpinnerComponent.vue";
+import Alert from "@/components/AlertComponent.vue";
 export default {
   data: function () {
     return {
@@ -59,6 +68,9 @@ export default {
       error: false,
       message: "",
       BASE_URL: BASE_URL,
+      id: this.$route.params.userId,
+      curr_user: this.$store.getters.user_id,
+      config: this.$store.getters.config,
     };
   },
   components: {
@@ -67,18 +79,23 @@ export default {
     FollowingButton,
     Tab,
     Spinner,
+    Alert,
   },
   methods: {
     getUserInfo: async function () {
+      console.log("Info Fetched");
       try {
         this.loading = true;
-        const res = await axios.get(
-          `${BASE_URL}/api/user/info/${this.user_id}`
+        const res = await axios.post(
+          `${BASE_URL}/api/user/info/${this.$route.params.userId}`,
+          {},
+          this.config
         );
         if (res) {
           this.data = { ...res.data.userDetails };
           this.loading = false;
           this.error = false;
+          console.log(res.data.userDetails);
         } else {
           throw new Error("User Cannot Be found");
         }
@@ -86,6 +103,47 @@ export default {
         this.loading = false;
         this.error = true;
         this.message = error.message;
+      }
+    },
+    followUser: async function () {
+      try {
+        console.log(
+          await axios.post(
+            `${BASE_URL}/api/follow/`,
+            {
+              user_id: this.id,
+            },
+            this.config
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    unfollowUser: async function () {
+      try {
+        console.log(
+          await axios.post(
+            `${BASE_URL}/api/unfollow/`,
+            {
+              user_id: this.id,
+            },
+            this.config
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    followHandler: async function () {
+      if (!this.data.isFollowing) {
+        this.data.isFollowing = true;
+        this.followUser();
+        this.data.followers++;
+      } else {
+        this.data.isFollowing = false;
+        this.unfollowUser();
+        this.data.followers--;
       }
     },
   },
@@ -103,6 +161,16 @@ export default {
   },
   created: function () {
     console.log(this.$route);
+    this.getUserInfo();
+    this.$watch(
+      () => this.$route.params,
+      (toParams) => {
+        if (this.id !== toParams.userId) {
+          this.id = toParams.userId;
+          this.getUserInfo();
+        }
+      }
+    );
   },
   props: {
     user_id: {
@@ -110,9 +178,8 @@ export default {
       required: true,
     },
   },
-  mounted: function () {
-    this.getUserInfo();
-  },
+  watch: {},
+  mounted: function () {},
 };
 </script>
 

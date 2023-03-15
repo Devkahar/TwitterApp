@@ -15,12 +15,22 @@
 </template>
 
 <script>
-import ProfileHeader from "@/component/ProfileHeader.vue";
+import ProfileHeader from "@/components/ProfileHeader.vue";
 export default {
   data: function () {
     return {
       userId: this.$route.params.userId,
     };
+  },
+  props: {
+    // userId: {
+    //   type: String,
+    //   required: true,
+    // },
+  },
+
+  watch: {
+    $route: "",
   },
   components: { ProfileHeader },
 };

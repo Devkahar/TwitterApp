@@ -5,15 +5,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userInfo: JSON.parse(localStorage.getItem("userInfo")),
+    userInfo: JSON.parse(localStorage.getItem("userInfo"))
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : {},
   },
   getters: {
     config: function (state) {
       return {
         headers: {
-          authorization: `Bearer ${state.userInfo.token}`,
+          authorization: `Bearer ${state.userInfo?.token}`,
         },
       };
+    },
+    user_id: function (state) {
+      return `${state.userInfo?._id}`;
     },
   },
   mutations: {},
