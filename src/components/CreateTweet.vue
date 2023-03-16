@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div
-      class="w-full px-5 py-3 border-b border-lighter flex items-center justify-between"
-    >
-      <div class="h-20 w-20 rounded-full mr-10">
+    <div class="w-full px-5 py-3 border-b border-lighter flex justify-between">
+      <div class="h-20 w-24 rounded rounded-full mr-10">
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-          class="flex-none w-full h-full rounded-full border border-lighter"
+          :src="getUserImage"
+          class="rounded flex-none w-full h-full rounded-full border border-lighter"
         />
       </div>
       <div class="w-full">
@@ -15,14 +13,20 @@
           class="mt-3 pb-3 w-full focus:outline-none file-button"
           v-model="text"
         />
+        <div class="mb-2">
+          <SpinnerComponent v-if="img_loading" />
+          <div class="post_img_box my-3" v-if="post_img">
+            <img :src="postImgUrl" alt="" class="post_img" />
+          </div>
+        </div>
         <div class="flex justify-between items-center w-full">
           <div class="">
             <i class="text-lg text-blue mr-4 far fa-image relative">
               <input
                 type="file"
-                accept="image/jpeg"
-                @change="uploadImage"
+                accept="image/jpeg/png/jpg"
                 class="file-hidden absolute"
+                @change="changeFileHandler"
               />
             </i>
 
@@ -40,49 +44,99 @@
   </div>
 </template>
 <script>
-import Alert from "@/component/AlertComponent.vue";
-import ButtonComponent from "@/component/ButtonComponent.vue";
+import Alert from "@/components/AlertComponent.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 import { BASE_URL } from "@/helper/constants";
 import axios from "axios";
-
+import SpinnerComponent from "./SpinnerComponent.vue";
 export default {
   data() {
     return {
-      text: "",
+      text: this.props_text,
       image: "",
       loading: false,
       config: this.$store.getters.config,
       error: false,
+      user_img: this.$store.getters.user_img,
       message: "Something Went Wrong",
+      post_img: this.prop_post_img,
+      img_loading: false,
     };
   },
   methods: {
-    createTweet: async function () {
-      this.loading = true;
-      this.error = false;
-      try {
-        console.log("config ", this.config);
-        const res = await axios.post(
-          `${BASE_URL}/api/post/create/`,
-          {
-            text: this.text,
-          },
-          this.config
-        );
-        if (res) {
-          this.loading = false;
-          this.text = "";
-        } else {
-          throw new Error("Something is wrong");
+    uploadFile: function (file) {
+      console.log(file);
+      this.fileList[0].status = "done";
+    },
+    changeFileHandler: async function (event) {
+      let img = event.target.files[0];
+      if (img) {
+        const formData = new FormData();
+        formData.append("image", img);
+        this.img_loading = true;
+        try {
+          const res = await axios.post(
+            `${BASE_URL}/api/image/upload`,
+            formData
+          );
+          if (res) {
+            this.img_loading = false;
+            this.post_img = res.data.path;
+            console.log(res);
+          }
+        } catch (error) {
+          this.img_loading = false;
         }
-      } catch (error) {
-        this.loading = false;
-        this.error = true;
-        this.message = "Something Went Wrong";
+      }
+    },
+    createTweet: async function () {
+      if (this.text !== "") {
+        this.loading = true;
+        this.error = false;
+        try {
+          console.log("config ", this.config);
+          const res = await axios.post(
+            `${BASE_URL}/api/post/create/`,
+            {
+              text: this.text,
+              image: this.post_img !== "" ? this.post_img : null,
+            },
+            this.config
+          );
+          if (res) {
+            this.loading = false;
+            this.text = "";
+            this.post_img = "";
+          } else {
+            throw new Error("Something is wrong");
+          }
+        } catch (error) {
+          this.loading = false;
+          this.error = true;
+          this.message = "Something Went Wrong";
+        }
       }
     },
   },
-  components: { ButtonComponent, Alert },
+  computed: {
+    getUserImage: function () {
+      return `${BASE_URL}${this.user_img}`;
+    },
+    postImgUrl: function () {
+      return `${BASE_URL}${this.post_img}`;
+    },
+  },
+  props: {
+    prop_post_img: {
+      type: String,
+      default: "",
+    },
+    props_text: {
+      type: String,
+      default: "",
+    },
+  },
+  components: { ButtonComponent, Alert, SpinnerComponent },
 };
 </script>
 <style>
@@ -92,5 +146,19 @@ export default {
   height: 18px;
   top: 0;
   left: 0;
+}
+.post_img_box {
+  max-width: 510px;
+  max-height: 750px;
+  width: max-content;
+  border-radius: 18px;
+  -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  -moz-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  border: 0.5px solid #000;
+}
+.post_img {
+  object-fit: contain;
+  border-radius: 18px;
 }
 </style>

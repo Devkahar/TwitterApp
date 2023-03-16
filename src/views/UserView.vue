@@ -1,5 +1,5 @@
 <template>
-  <div class="2xl:container px-40 mx-auto">
+  <div class="container px-28 mx-auto">
     <div class="flex">
       <div class="w-3/12">
         <div class="w-full"><SideView /></div>
@@ -30,16 +30,16 @@ export default {
       userId: this.$route.params.userId,
     };
   },
-  created: function () {
-    this.$watch(
-      () => this.$route.params,
-      (toParams) => {
-        if (this.id !== toParams.userId) {
-          this.userId = toParams.userId;
-        }
-      }
-    );
-  },
+  // created: function () {
+  //   this.$watch(
+  //     () => this.$route.params,
+  //     (toParams) => {
+  //       if (this.id !== toParams.userId) {
+  //         this.userId = toParams.userId;
+  //       }
+  //     }
+  //   );
+  // },
   components: { ProfileHeader, SideView, SearchTweet },
 };
 </script>

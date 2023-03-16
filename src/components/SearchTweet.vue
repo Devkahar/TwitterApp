@@ -110,5 +110,7 @@ export default {
 .search-item-box {
   position: absolute;
   top: 20;
+  z-index: 10;
+  background-color: #fff;
 }
 </style>

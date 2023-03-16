@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 flex border-bottom">
+  <div class="p-5 flex border_bottom">
     <div class="h-12 w-12 rounded">
       <img :src="user_img" alt="" class="h-full w-full" />
     </div>
@@ -12,7 +12,7 @@
       />
       <p>{{ text }}</p>
       <div class="post_img_box my-3" v-if="post_img !== null">
-        <img :src="`${BASE_URL}/${post_img}`" alt="" class="post_img" />
+        <img :src="postImgUrl" alt="" class="post_img" />
       </div>
       <div class="w-100 flex justify-between pr-24 pl-12">
         <div class="flex items-center">
@@ -26,6 +26,36 @@
         <div class="flex items-center">
           <LikeButton :click="() => post_like_handler(_id)" :active="liked" />
           <span class="ml-1">{{ like_count }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="relative" v-if="performAction">
+      <div class="cursor-pointer" @click="toggleSuggestion">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          class="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1hdv0qi"
+          height="16px"
+          width="16px"
+        >
+          <g>
+            <path
+              d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
+            ></path>
+          </g>
+        </svg>
+      </div>
+      <div class="w-12">
+        <div class="action-buttons-box" v-if="showSuggestion">
+          <div
+            class="p-2 cursor-pointer border_bottom"
+            @click="editTweetHandler"
+          >
+            <h1 class="text-base">Edit</h1>
+          </div>
+          <div class="p-2 cursor-pointer" @click="deleteTweetHandler">
+            <h1 class="text-base">Delete</h1>
+          </div>
         </div>
       </div>
     </div>
@@ -47,13 +77,24 @@ export default {
     return {
       BASE_URL: BASE_URL,
       user_id: this.$store.getters.user_id,
+      showSuggestion: false,
+      performAction: this.author_id === this.$store.getters.user_id,
     };
   },
   methods: {
     visit_user_profile: function () {
       if (this.user_id !== this.author_id) {
-        this.$router.push({ path: userProfilePath(this.user_id) });
+        this.$router.push({ path: userProfilePath(this.author_id) });
       }
+    },
+    toggleSuggestion: function () {
+      this.showSuggestion = !this.showSuggestion;
+    },
+    editTweetHandler: function () {
+      this.edit_tweet(this._id);
+    },
+    deleteTweetHandler: function () {
+      this.delete_tweet(this._id);
     },
   },
   computed: {
@@ -65,6 +106,10 @@ export default {
         return `${BASE_URL}${this.profile_url}`;
       }
       return `${BASE_URL}${dummy_img}`;
+    },
+    postImgUrl: function () {
+      if (this.post_img[0] !== "/") return `${BASE_URL}/${this.post_img}`;
+      return `${BASE_URL}${this.post_img}`;
     },
   },
   props: {
@@ -108,6 +153,12 @@ export default {
       type: Function,
       required: true,
     },
+    delete_tweet: {
+      type: Function,
+    },
+    edit_tweet: {
+      type: Function,
+    },
     author_id: {
       type: String,
       required: true,
@@ -123,6 +174,9 @@ export default {
 </script>
 
 <style scoped>
+.border_bottom {
+  border-bottom: 0.5px solid #eee;
+}
 .post_img_box {
   max-width: 510px;
   max-height: 750px;
@@ -136,5 +190,15 @@ export default {
 .post_img {
   object-fit: contain;
   border-radius: 18px;
+}
+.action-buttons-box {
+  border: 1px solid #eee;
+  position: absolute;
+  top: 1%;
+  left: -800%;
+  z-index: 10;
+  background-color: #fff;
+  width: 120px;
+  border-radius: 10px;
 }
 </style>

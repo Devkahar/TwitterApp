@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div v-if="data">
+    <div v-if="data && tab">
       <Tweet
         v-bind:key="tweet._id"
         v-for="tweet in data"
@@ -11,10 +11,12 @@
         :liked="tweet.like ? tweet.like : false"
         :like_count="tweet.like_count ? tweet.like_count : 0"
         :retweet_count="tweet.repost_count ? tweet.repost_count : 0"
-        :reply_count="tweet.like_count ? tweet.like_count : 0"
+        :reply_count="tweet.reply_count ? tweet.reply_count : 0"
         :post_img="tweet.image ? tweet.image : null"
         :post_like_handler="likePostHandler"
         :author_id="tweet.author._id"
+        :delete_tweet="deleteTweet"
+        :edit_tweet="editTweet"
       >
       </Tweet>
     </div>
@@ -25,13 +27,17 @@
       <h1 class="text-2xl">No Tweets</h1>
     </div>
     <Spinner v-if="loading && !limit" />
-    <Alert v-if="error && !loading" title="Invalid User" :message="message" />
+    <Alert
+      v-if="error && !loading"
+      title="Something Went Wrong"
+      :message="message"
+    />
   </div>
 </template>
 
 <script>
 import Tweet from "./TweetComponent.vue";
-import { BASE_URL } from "@/helper/constants";
+import { BASE_URL, ROUTES_CONSTANTS } from "@/helper/constants";
 import axios from "axios";
 import Alert from "@/components/AlertComponent.vue";
 import Spinner from "./SpinnerComponent.vue";
@@ -46,6 +52,8 @@ export default {
       page: 1,
       limit: false,
       config: this.$store.getters.config,
+      tb: this.tab,
+      isAuth: this.$store.getters.isUserAuth,
     };
   },
   components: {
@@ -62,17 +70,29 @@ export default {
       type: String,
     },
   },
+  watch: {
+    tab: function (newTab) {
+      this.reset(newTab);
+      this.getTweetsByUserId();
+    },
+  },
   methods: {
+    reset: function (newTab) {
+      this.data = [];
+      this.page = 1;
+      this.tb = newTab;
+    },
     getTweetsByUserId: async function () {
       try {
+        console.log("new Tweets");
         this.loading = true;
         this.limit = false;
         const res = await axios.post(
           `${BASE_URL}/api/post/tweets/${this.page}`,
           {
             user_id: this.userId,
-            like: this.tab === "likes",
-            replies: this.tab === "replies",
+            like: this.tb === "likes",
+            replies: this.tb === "replies",
           },
           this.config
         );
@@ -97,32 +117,28 @@ export default {
     scrollFetchTweets: function () {
       let context = this;
       let time;
-      window.addEventListener("scroll", function () {
-        let scroll =
-          document.documentElement.scrollTop +
-            document.documentElement.offsetHeight >=
-          document.body.scrollHeight - 500;
-        console.log(
-          scroll,
-          document.documentElement.scrollTop,
-          // window.screenY,
-          document.documentElement.offsetHeight,
-          window.innerHeight,
-          document.body.scrollHeight
-          // document.body.scrollHeight
-        );
-        if (scroll && !this.limit) {
-          if (time) clearTimeout(time);
-          context.loading = true;
-          time = setTimeout(() => {
-            context.getTweetsByUserId();
-          }, 2000);
-        }
-      });
+      document
+        .getElementById("tweetContainer")
+        .addEventListener("scroll", function () {
+          let scroll =
+            document.documentElement.scrollTop +
+              document.documentElement.offsetHeight >=
+            document.body.scrollHeight - 500;
+          if (scroll && !this.limit) {
+            if (time) clearTimeout(time);
+            context.loading = true;
+            time = setTimeout(() => {
+              context.getTweetsByUserId();
+            }, 2000);
+          }
+        });
     },
     likePostHandler: async function (_id) {
+      if (!this.isAuth) {
+        this.$router.push({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
+        return;
+      }
       const idx = this.data.findIndex((el) => el._id === _id);
-
       if (this.data[idx].like) {
         this.data[idx].like = false;
         this.data[idx].like_count--;
@@ -154,9 +170,26 @@ export default {
         this.config
       );
     },
+    deleteTweet: async function (_id) {
+      this.data = this.data.filter((el) => el._id !== _id);
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/api/post/delete/`,
+          {
+            post_id: _id,
+          },
+          this.config
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    editTweet: async function () {},
   },
 
   mounted: function () {
+    this.data = [];
     this.getTweetsByUserId();
     this.scrollFetchTweets();
   },

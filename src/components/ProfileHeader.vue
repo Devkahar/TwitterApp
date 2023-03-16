@@ -1,14 +1,14 @@
 <template>
-  <div class="">
-    <Spinner v-if="loading" />
-    <div class="" v-if="data">
+  <Spinner v-if="loading" />
+  <div class="" v-else>
+    <div class="tweet-container hide-scroll" v-if="data" id="tweetContainer">
       <div class="head flex items-center">
         <BackButton />
         <UserName :name="data.name" sub-info="11.4k Tweets" />
       </div>
       <div class="img-content">
-        <div class="back-cover">
-          <img class="fit-img" :src="backUrl" alt="" />
+        <div class="back-cover w-full">
+          <img :src="backUrl" alt="" />
         </div>
         <div class="profile-img">
           <div class="img-round h-36 w-36 rounded">
@@ -38,8 +38,8 @@
           <strong>{{ this.data.followers }}</strong> Followers
         </p>
       </div>
-      <Tab></Tab>
-      <router-view :key="$route.path" />
+      <Tab :change_tab="changeTabHandler" :curr_tab="tab" />
+      <FetchTweets :tab="tab" :userId="id" />
     </div>
     <Alert v-if="error && !loading" title="Invalid User" :message="message" />
   </div>
@@ -54,9 +54,10 @@ import FollowingButton from "./FollowingButtonComponent.vue";
 import Location from "@/assets/location.svg";
 import Tab from "@/components/TabComponent.vue";
 import axios from "axios";
-import { BASE_URL, user_img } from "@/helper/constants";
+import { BASE_URL, user_img, getUserName } from "@/helper/constants";
 import Spinner from "@/components/SpinnerComponent.vue";
 import Alert from "@/components/AlertComponent.vue";
+import FetchTweets from "@/components/FetchTweets.vue";
 export default {
   data: function () {
     return {
@@ -71,6 +72,7 @@ export default {
       id: this.$route.params.userId,
       curr_user: this.$store.getters.user_id,
       config: this.$store.getters.config,
+      tab: "tweets",
     };
   },
   components: {
@@ -80,6 +82,7 @@ export default {
     Tab,
     Spinner,
     Alert,
+    FetchTweets,
   },
   methods: {
     getUserInfo: async function () {
@@ -146,10 +149,15 @@ export default {
         this.data.followers--;
       }
     },
+    changeTabHandler: function (newtab) {
+      if (newtab !== this.tab) {
+        this.tab = newtab;
+      }
+    },
   },
   computed: {
     userName: function () {
-      return `@${this.data.name.split(" ").join("").toLowerCase()}`;
+      return getUserName(this.data.name);
     },
     userImage: function () {
       if (this.data.image) {
@@ -160,8 +168,8 @@ export default {
     },
   },
   created: function () {
-    console.log(this.$route);
     this.getUserInfo();
+    console.log(this.$route);
     this.$watch(
       () => this.$route.params,
       (toParams) => {
@@ -178,6 +186,9 @@ export default {
       required: true,
     },
   },
+  mounted: function () {
+    // this.getUserInfo();
+  },
 };
 </script>
 
@@ -191,18 +202,33 @@ export default {
 .back-cover {
   z-index: 0;
 }
+.back-cover > img {
+  height: 218px;
+}
 .img-content {
   position: relative;
 }
 .profile-img,
 .profile-img-mask {
   position: absolute;
-  top: 150px;
+  top: 60%;
   left: 15px;
   z-index: 100;
 }
 .profile-img-mask {
   border-radius: 500px;
   border: 4px solid #fff;
+}
+.tweet-container {
+  height: 100vh;
+  overflow: scroll;
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
