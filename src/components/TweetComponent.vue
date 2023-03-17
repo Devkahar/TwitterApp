@@ -73,6 +73,7 @@ import {
   user_img as dummy_img,
 } from "@/helper/constants";
 export default {
+  name: "TweetComponent",
   data: function () {
     return {
       BASE_URL: BASE_URL,

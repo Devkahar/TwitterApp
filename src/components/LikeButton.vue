@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  name: "LikebuttonComponent",
   props: {
     active: {
       type: Boolean,

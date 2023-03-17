@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: "ButtonComponent",
   methods: {
     onClickHandler(event) {
       this.clickHandler(event);

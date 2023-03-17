@@ -52,6 +52,7 @@
 import { BASE_URL, getUserName, ROUTES_CONSTANTS } from "@/helper/constants";
 
 export default {
+  name: "LogoutComponent",
   data: function () {
     return {
       dropdown: false,

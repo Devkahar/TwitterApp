@@ -5,3 +5,9 @@
     </a-spin>
   </div>
 </template>
+
+<script>
+export default {
+  name: "SpinnerComponent",
+};
+</script>

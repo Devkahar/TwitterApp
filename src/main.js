@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "ant-design-vue/dist/antd.css";
+import "./assets/css/main.css";
 Vue.config.productionTip = false;
 import {
   Button,
@@ -28,7 +29,11 @@ Vue.component(Dropdown.name, Dropdown);
 Vue.component(Upload.name, Upload);
 Vue.config.productionTip = false;
 Vue.use(UUID);
-
+Vue.mixin({
+  created() {
+    console.log("[created] " + this.$options.name);
+  },
+});
 new Vue({
   router,
   store,

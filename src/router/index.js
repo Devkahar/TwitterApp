@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import { ROUTES_CONSTANTS } from "@/helper/constants";
 import store from "@/store";
+import MainLayout from "@/Layouts/MainLayout.vue";
+import AuthLayout from "@/Layouts/AuthLayout.vue";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -10,7 +12,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"HomePage"*/ "@/views/HomeView.vue"),
     meta: {
-      guest: true,
+      layout: MainLayout,
     },
   },
   {
@@ -19,7 +21,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"SignUpPage"*/ "@/views/SignupView.vue"),
     meta: {
-      guest: true,
+      layout: AuthLayout,
     },
   },
   {
@@ -28,7 +30,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"LoginPage"*/ "@/views/LoginView.vue"),
     meta: {
-      guest: true,
+      layout: AuthLayout,
     },
   },
   {
@@ -37,7 +39,7 @@ const routes = [
     component: () =>
       import(/* webpageChunkName:"UserView"*/ "@/views/UserView.vue"),
     meta: {
-      guest: true,
+      layout: MainLayout,
     },
     props: true,
   },

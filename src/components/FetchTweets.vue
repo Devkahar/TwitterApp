@@ -43,6 +43,7 @@ import Alert from "@/components/AlertComponent.vue";
 import Spinner from "./SpinnerComponent.vue";
 
 export default {
+  name: "FetchtweetComponent",
   data: function () {
     return {
       loading: false,

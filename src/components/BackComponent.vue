@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "BackComponent",
   methods: {
     navBack: function () {
       this.$router.go(-1);

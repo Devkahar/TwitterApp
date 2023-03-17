@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  name: "InputComponent",
   props: {
     password: {
       type: Boolean,

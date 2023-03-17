@@ -59,6 +59,7 @@ import Spinner from "@/components/SpinnerComponent.vue";
 import Alert from "@/components/AlertComponent.vue";
 import FetchTweets from "@/components/FetchTweets.vue";
 export default {
+  name: "ProfileHeadComponent",
   data: function () {
     return {
       backUrl: BackCover,

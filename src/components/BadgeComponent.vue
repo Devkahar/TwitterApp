@@ -8,6 +8,7 @@
 import Badge from "@/assets/twitter-verified-badge.svg";
 
 export default {
+  name: "BadgeComponent",
   data: function () {
     return {
       badgeUrl: Badge,

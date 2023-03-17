@@ -1,0 +1,15 @@
+.tweet-container {
+  border: 1px solid #eee;
+  height: 100vh;
+  overflow: scroll;
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.rounded {
+  clip-path: circle(48%);
+}

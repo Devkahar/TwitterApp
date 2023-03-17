@@ -32,6 +32,7 @@ import { BASE_URL } from "@/helper/constants";
 import axios from "axios";
 let time;
 export default {
+  name: "SearchtweetComponent",
   data: function () {
     return {
       loading: false,
