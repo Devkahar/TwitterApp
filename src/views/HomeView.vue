@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <HomeComponent />
-  </div>
+  <HomeComponent />
 </template>
 <style>
 .page {

@@ -1,5 +1,5 @@
 <template>
-  <div section="main">
+  <div section="main h-screen">
     <div class="container px-28 mx-auto">
       <div class="flex">
         <!-- side nav -->
@@ -22,7 +22,7 @@
           <FetchTweets />
         </div>
         <!-- trending -->
-        <div class="w-3/12 h-full border-l border-lighter py-2 px-6">
+        <div class="w-3/12 h-full border-l border-lighter py-2 px-6 scroll">
           <SearchTweet />
           <div class="w-full rounded-lg bg-lightest">
             <div class="flex items-center justify-between p-3">
