@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <component :is="this.$route.meta.layout || 'div'">
+      <router-view />
+    </component>
   </div>
 </template>
 
@@ -9,8 +11,3 @@ export default {
   name: "App",
 };
 </script>
-<style>
-.rounded {
-  clip-path: circle(48%);
-}
-</style>

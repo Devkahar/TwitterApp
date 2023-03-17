@@ -1,12 +1,6 @@
 <template>
   <HomeComponent />
 </template>
-<style>
-.page {
-  height: 100vh;
-  width: 100vw;
-}
-</style>
 <script>
 import HomeComponent from "@/components/HomeComponent.vue";
 export default {

@@ -1,18 +1,13 @@
 <template>
-  <div class="container mx-auto flex justify-center items-center h-screen">
-    <div class="form-box p-16 w-4/12 text-center">
-      <h1 class="text-5xl">login</h1>
-      <Input text="User Email" v-model="email" />
-      <Input text="Enter Password" v-model="password" :password="true" />
-      <Alert v-if="error" title="Invalid Details" :message="message" />
-      <Button :clickHandler="loginHandler" :loading="loading">login!</Button>
-      <p>
-        <router-link to="/signup">Don't have an account? sign up</router-link>
-        <!-- <router-link tag="" active-class="active" to="SignupView" exact
-          ><a></a></router-link
-        > -->
-      </p>
-    </div>
+  <div>
+    <h1 class="text-5xl">login</h1>
+    <Input text="User Email" v-model="email" />
+    <Input text="Enter Password" v-model="password" :password="true" />
+    <Alert v-if="error" title="Invalid Details" :message="message" />
+    <Button :clickHandler="loginHandler" :loading="loading">login!</Button>
+    <p>
+      <router-link to="/signup">Don't have an account? sign up</router-link>
+    </p>
   </div>
 </template>
 

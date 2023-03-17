@@ -13,6 +13,7 @@
 import TabItem from "./TabItem.vue";
 import { uuid } from "vue-uuid";
 export default {
+  name: "TabComponent",
   data: function () {
     return {
       items: [

@@ -1,18 +1,16 @@
 <template>
-  <div class="container mx-auto flex justify-center items-center h-screen">
-    <div class="form-box p-16 w-4/12 text-center">
-      <h1 class="text-5xl">Sign Up</h1>
-      <Input text="User Name" v-model="name" />
-      <Input text="User Email" v-model="email" />
-      <Input text="Enter Password" v-model="password" :password="true" />
-      <Input text="Tell Something About You" v-model="bio" :textArea="true" />
-      <Alert v-if="error" title="Invalid Details" :message="message" />
-      <Button :clickHandler="signUpHandler" :loading="loading">SignUp</Button>
-      <p>
-        <router-link to="/login">Already have an account? login!</router-link>
-      </p>
-      <!-- <a-button type="primary" @click="signUpHandler"> Sign Up </a-button> -->
-    </div>
+  <div>
+    <h1 class="text-5xl">Sign Up</h1>
+    <Input text="User Name" v-model="name" />
+    <Input text="User Email" v-model="email" />
+    <Input text="Enter Password" v-model="password" :password="true" />
+    <Input text="Tell Something About You" v-model="bio" :textArea="true" />
+    <Alert v-if="error" title="Invalid Details" :message="message" />
+    <Button :clickHandler="signUpHandler" :loading="loading">SignUp</Button>
+    <p>
+      <router-link to="/login">Already have an account? login!</router-link>
+    </p>
+    <!-- <a-button type="primary" @click="signUpHandler"> Sign Up </a-button> -->
   </div>
 </template>
 

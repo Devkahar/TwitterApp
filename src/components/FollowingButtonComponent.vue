@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: "FollowbuttonComponent",
   data: function () {
     return {
       text: this.is_following ? "Following" : "Follow",

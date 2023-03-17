@@ -21,6 +21,7 @@
 import Badge from "@/components/BadgeComponent.vue";
 
 export default {
+  name: "UserNameComponent",
   components: {
     Badge,
   },

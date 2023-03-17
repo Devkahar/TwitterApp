@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: "TabItemComponent",
   props: {
     isActive: {
       type: Boolean,

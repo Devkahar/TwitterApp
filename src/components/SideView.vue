@@ -39,6 +39,7 @@ import { userProfilePath } from "@/helper/constants";
 import LogoutPopup from "./LogoutPopup.vue";
 
 export default {
+  name: "SideView",
   data: function () {
     return {
       isAuth: this.$store.getters.isUserAuth,

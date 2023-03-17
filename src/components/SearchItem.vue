@@ -24,6 +24,7 @@ import { BASE_URL, user_img, userProfilePath } from "@/helper/constants";
 import UsernameComponent from "@/components/UsernameComponent.vue";
 import SpinnerComponent from "./SpinnerComponent.vue";
 export default {
+  name: "SearchitemComponent",
   data: function () {
     return {
       author_id: this.$route.params.userId,

@@ -50,6 +50,7 @@ import { BASE_URL } from "@/helper/constants";
 import axios from "axios";
 import SpinnerComponent from "./SpinnerComponent.vue";
 export default {
+  name: "CreatetweetComponent",
   data() {
     return {
       text: this.props_text,
