@@ -17,6 +17,7 @@
         :author_id="tweet.author._id"
         :delete_tweet="deleteTweet"
         :edit_tweet="editTweet"
+        :createdAt="tweet.createdAt"
       >
       </Tweet>
     </div>
@@ -82,6 +83,7 @@ export default {
       this.data = [];
       this.page = 1;
       this.tb = newTab;
+      //this.userId =;
     },
     getTweetsByUserId: async function () {
       try {

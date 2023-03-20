@@ -6,7 +6,7 @@
     <div class="ml-2 w-full">
       <UserName
         :name="name"
-        :subInfo="`@${getUserName}`"
+        :subInfo="`@${getUserName} ${getDate}`"
         :small="true"
         :handle_click="visit_user_profile"
       />
@@ -72,6 +72,7 @@ import {
   userProfilePath,
   user_img as dummy_img,
 } from "@/helper/constants";
+import { getCreatedDate } from "@/helper/util";
 export default {
   name: "TweetComponent",
   data: function () {
@@ -111,6 +112,9 @@ export default {
     postImgUrl: function () {
       if (this.post_img[0] !== "/") return `${BASE_URL}/${this.post_img}`;
       return `${BASE_URL}${this.post_img}`;
+    },
+    getDate: function () {
+      return getCreatedDate(this.createdAt);
     },
   },
   props: {
@@ -161,6 +165,10 @@ export default {
       type: Function,
     },
     author_id: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
       type: String,
       required: true,
     },

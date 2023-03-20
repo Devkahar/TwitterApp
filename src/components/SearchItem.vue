@@ -77,8 +77,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.item {
-}
-</style>

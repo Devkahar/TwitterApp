@@ -60,6 +60,5 @@ export default {
       required: true,
     },
   },
-  watch: {},
 };
 </script>
