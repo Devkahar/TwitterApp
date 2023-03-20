@@ -7,7 +7,6 @@ export default {
   name: "HomeView",
   components: {
     HomeComponent,
-    // CreateTweet,
   },
 };
 </script>

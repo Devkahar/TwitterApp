@@ -48,25 +48,12 @@ export default {
       if (!this.loading) this.loading = true;
       console.log("User Query");
       if (time) clearTimeout(time);
-      let context = this;
       time = setTimeout(() => {
-        context.searchUser();
+        this.searchUser();
       }, 2000);
     },
   },
   methods: {
-    changeQueryHandler: function () {
-      let context = this;
-      let time;
-      return function (event) {
-        console.log("change");
-        context.query = event.target.value;
-        if (time) clearTimeout(time);
-        time = setTimeout(() => {
-          context.searchUser();
-        }, 2000);
-      };
-    },
     searchUser: async function () {
       try {
         this.error = false;

@@ -44,9 +44,6 @@ export default {
       ],
     };
   },
-  created: function () {
-    // console.log("created", this.$route.path.split("/")[2]);
-  },
   components: {
     TabItem,
   },
@@ -60,6 +57,5 @@ export default {
       required: true,
     },
   },
-  watch: {},
 };
 </script>
