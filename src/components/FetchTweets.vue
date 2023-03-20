@@ -1,11 +1,10 @@
 <template>
   <div class="">
-    <div v-if="data && tab">
+    <div v-if="tweetList && tab">
       <Tweet
-        v-bind:key="tweet._id"
-        v-for="tweet in data"
+        v-bind:key="tweet.uuid"
+        v-for="tweet in tweetList"
         :_id="tweet._id"
-        :text="tweet.text ? tweet.text : 'Something...'"
         :profile_url="tweet.author.image ? tweet.author.image : ''"
         :name="tweet.author.name ? tweet.author.name : 'Unknown'"
         :liked="tweet.like ? tweet.like : false"
@@ -18,16 +17,16 @@
         :delete_tweet="deleteTweet"
         :edit_tweet="editTweet"
         :createdAt="tweet.createdAt"
-      >
-      </Tweet>
+        :tweet_content="tweet.text"
+      />
     </div>
     <div
-      v-if="data.length === 0 && !loading"
+      v-if="tweetList.length === 0 && !loading"
       class="w-full h-40 flex items-center justify-center"
     >
       <h1 class="text-2xl">No Tweets</h1>
     </div>
-    <Spinner v-if="loading && !limit" />
+    <Spinner v-if="loading" />
     <Alert
       v-if="error && !loading"
       title="Something Went Wrong"
@@ -38,25 +37,41 @@
 
 <script>
 import Tweet from "./TweetComponent.vue";
-import { BASE_URL, ROUTES_CONSTANTS } from "@/helper/constants";
-import axios from "axios";
+import { ROUTES_CONSTANTS } from "@/helper/constants";
 import Alert from "@/components/AlertComponent.vue";
 import Spinner from "./SpinnerComponent.vue";
-
 export default {
   name: "FetchtweetComponent",
   data: function () {
     return {
-      loading: false,
-      message: "",
-      error: false,
-      data: [],
-      page: 1,
-      limit: false,
       config: this.$store.getters.config,
-      tb: this.tab,
       isAuth: this.$store.getters.isUserAuth,
+      tb: this.tab,
+      id: this.userId,
     };
+  },
+  computed: {
+    tweetList: function () {
+      return this.$store.getters.tweetList;
+    },
+    error: function () {
+      return this.$store.getters.error;
+    },
+    loading: function () {
+      return this.$store.getters.loading;
+    },
+    message: function () {
+      return this.$store.getters.message;
+    },
+    getTab: function () {
+      return this.tab;
+    },
+    getUserId: function () {
+      return this.userId ?? null;
+    },
+    limit: function () {
+      return this.$store.getters.limit;
+    },
   },
   components: {
     Tweet,
@@ -72,53 +87,16 @@ export default {
       type: String,
     },
   },
-  watch: {
-    tab: function (newTab) {
-      this.reset(newTab);
-      this.getTweetsByUserId();
-    },
-  },
   methods: {
-    reset: function (newTab) {
-      this.data = [];
-      this.page = 1;
-      this.tb = newTab;
-      //this.userId =;
-    },
-    getTweetsByUserId: async function () {
-      try {
-        console.log("new Tweets");
-        this.loading = true;
-        this.limit = false;
-        const res = await axios.post(
-          `${BASE_URL}/api/post/tweets/${this.page}`,
-          {
-            user_id: this.userId,
-            like: this.tb === "likes",
-            replies: this.tb === "replies",
-          },
-          this.config
-        );
-        if (res.data && res.data.tweets) {
-          console.log(res.data.tweets);
-          if (res.data.tweets.length === 0) {
-            this.limit = true;
-          }
-          this.data = [...this.data, ...res.data.tweets];
-          this.error = false;
-          this.loading = false;
-        } else {
-          throw new Error("Cannot Fetch Data");
-        }
-      } catch (error) {
-        this.message = error.message;
-        this.error = true;
-        this.loading = false;
-      }
-      this.page++;
+    reloadTweets: function () {
+      this.$store.dispatch("resetTweets");
+      this.$store.dispatch("fetchTweets", {
+        userId: this.getUserId,
+        tab: this.getTab,
+      });
     },
     scrollFetchTweets: function () {
-      let context = this;
+      let ctx = this;
       let time;
       document
         .getElementById("tweetContainer")
@@ -127,74 +105,47 @@ export default {
             document.documentElement.scrollTop +
               document.documentElement.offsetHeight >=
             document.body.scrollHeight - 500;
-          if (scroll && !this.limit) {
+          if (scroll && !ctx.limit) {
             if (time) clearTimeout(time);
-            context.loading = true;
+            ctx.$store.dispatch("setLoading");
             time = setTimeout(() => {
-              context.getTweetsByUserId();
-            }, 2000);
+              ctx.$store.dispatch("fetchTweets", {
+                userId: ctx.userId,
+                tab: ctx.getTab,
+              });
+            }, 1000);
           }
         });
     },
-    likePostHandler: async function (_id) {
+    likePostHandler: function (_id) {
       if (!this.isAuth) {
         this.$router.push({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
         return;
       }
-      const idx = this.data.findIndex((el) => el._id === _id);
-      if (this.data[idx].like) {
-        this.data[idx].like = false;
-        this.data[idx].like_count--;
-        this.unLikePost(_id);
-      } else {
-        this.data[idx].like = true;
-        this.data[idx].like_count++;
-        this.likePost(_id);
-      }
+      this.$store.dispatch("likeTweet", { _id });
     },
-    likePost: async function (id) {
-      console.log("postliked");
-      console.log(
-        await axios.post(
-          `${BASE_URL}/api/post/like/`,
-          {
-            post_id: id,
-          },
-          this.config
-        )
-      );
+    deleteTweet: function (_id) {
+      this.$store.dispatch("deleteTweet", { _id });
     },
-    unLikePost: async function (id) {
-      await axios.post(
-        `${BASE_URL}/api/post/unlike/`,
-        {
-          post_id: id,
-        },
-        this.config
-      );
-    },
-    deleteTweet: async function (_id) {
-      this.data = this.data.filter((el) => el._id !== _id);
-      try {
-        const res = await axios.post(
-          `${BASE_URL}/api/post/delete/`,
-          {
-            post_id: _id,
-          },
-          this.config
-        );
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    editTweet: async function () {},
+    editTweet: function () {},
   },
-
-  mounted: function () {
-    this.data = [];
-    this.getTweetsByUserId();
+  created: function () {
     this.scrollFetchTweets();
+    this.reloadTweets();
+  },
+  watch: {
+    getTab: function (newTab) {
+      if (this.tb !== newTab) {
+        this.tb = newTab;
+        this.reloadTweets();
+      }
+    },
+    getUserId: function (newId) {
+      if (this.id !== newId) {
+        this.id = newId;
+        this.reloadTweets();
+      }
+    },
   },
 };
 </script>

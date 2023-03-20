@@ -1,11 +1,8 @@
 <template>
   <div>
     <div class="w-full px-5 py-3 border-b border-lighter flex justify-between">
-      <div class="h-20 w-24 rounded rounded-full mr-10">
-        <img
-          :src="getUserImage"
-          class="rounded flex-none w-full h-full rounded-full border border-lighter"
-        />
+      <div class="pr-2">
+        <UserImage :url="user_img" />
       </div>
       <div class="w-full">
         <textarea
@@ -50,6 +47,7 @@ import { BASE_URL } from "@/helper/constants";
 import axios from "axios";
 import SpinnerComponent from "./SpinnerComponent.vue";
 
+import UserImage from "./UserImage.vue";
 export default {
   name: "CreatetweetComponent",
   data() {
@@ -109,10 +107,16 @@ export default {
             this.loading = false;
             this.text = "";
             this.post_img = "";
+            this.$store.dispatch("resetTweets");
+            this.$store.dispatch("fetchTweets", {
+              userId: null,
+              tab: null,
+            });
           } else {
             throw new Error("Something is wrong");
           }
         } catch (error) {
+          console.log(error);
           this.loading = false;
           this.error = true;
           this.message = "Something Went Wrong";
@@ -138,7 +142,7 @@ export default {
       default: "",
     },
   },
-  components: { ButtonComponent, Alert, SpinnerComponent },
+  components: { ButtonComponent, Alert, SpinnerComponent, UserImage },
 };
 </script>
 <style>

@@ -2,13 +2,6 @@
   <div class="images">
     <img src:true class="flex items-center" />
 
-    <!-- <button @click="img"></button> -->
-    <!-- <g-image
-      ref="iconImage"
-      alt=""
-      v-if="$page.post.cover_image"
-      :src=
-    /> -->
   </div>
 </template>
 <script>
@@ -29,9 +22,6 @@ export default {
         console.log(this.previewImage);
       };
     },
-    // onUpload() {
-    //   axios.post("my-domain.com/file-upload", this.previewImage);
-    // },
   },
   imageUpload: function () {
     this.$emit("uploadImage", this.image);

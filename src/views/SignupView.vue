@@ -66,6 +66,7 @@ export default {
         if (res.status === 201) {
           console.log(res);
           window.localStorage.setItem("userInfo", JSON.stringify(res.data));
+          this.$store.dispatch({ type: "signup" });
           this.error = false;
           this.message = "";
           this.loading = false;

@@ -11,9 +11,7 @@
           <img :src="backUrl" alt="" />
         </div>
         <div class="profile-img">
-          <div class="img-round h-36 w-36 rounded">
-            <img :src="`${BASE_URL}${userImage}`" alt="" class="img-fit" />
-          </div>
+          <UserImage :url="data.image ?? ''" :large_img="true" />
         </div>
         <div class="profile-img-mask h-36 w-36"></div>
       </div>
@@ -21,7 +19,7 @@
         <FollowingButton
           :is_following="data.isFollowing"
           :click_handler="followHandler"
-          v-if="curr_user !== id"
+          v-if="curr_user !== getUserId"
         />
       </div>
       <div class="my-4 px-4">
@@ -39,7 +37,7 @@
         </p>
       </div>
       <Tab :change_tab="changeTabHandler" :curr_tab="tab" />
-      <FetchTweets :tab="tab" :userId="id" />
+      <FetchTweets :tab="tab" :userId="getUserId" />
     </div>
     <Alert v-if="error && !loading" title="Invalid User" :message="message" />
   </div>
@@ -54,10 +52,11 @@ import FollowingButton from "./FollowingButtonComponent.vue";
 import Location from "@/assets/location.svg";
 import Tab from "@/components/TabComponent.vue";
 import axios from "axios";
-import { BASE_URL, user_img, getUserName } from "@/helper/constants";
+import { BASE_URL, getUserName } from "@/helper/constants";
 import Spinner from "@/components/SpinnerComponent.vue";
 import Alert from "@/components/AlertComponent.vue";
 import FetchTweets from "@/components/FetchTweets.vue";
+import UserImage from "./UserImage.vue";
 export default {
   name: "ProfileHeadComponent",
   data: function () {
@@ -70,12 +69,13 @@ export default {
       error: false,
       message: "",
       BASE_URL: BASE_URL,
-      id: this.$route.params.userId,
       curr_user: this.$store.getters.user_id,
       config: this.$store.getters.config,
       tab: "tweets",
+      id: this.context.userId,
     };
   },
+  inject: ["context"],
   components: {
     UserName,
     BackButton,
@@ -84,6 +84,7 @@ export default {
     Spinner,
     Alert,
     FetchTweets,
+    UserImage,
   },
   methods: {
     getUserInfo: async function () {
@@ -91,7 +92,7 @@ export default {
       try {
         this.loading = true;
         const res = await axios.post(
-          `${BASE_URL}/api/user/info/${this.$route.params.userId}`,
+          `${BASE_URL}/api/user/info/${this.getUserId}`,
           {},
           this.config
         );
@@ -115,7 +116,7 @@ export default {
           await axios.post(
             `${BASE_URL}/api/follow/`,
             {
-              user_id: this.id,
+              user_id: this.getUserId,
             },
             this.config
           )
@@ -130,7 +131,7 @@ export default {
           await axios.post(
             `${BASE_URL}/api/unfollow/`,
             {
-              user_id: this.id,
+              user_id: this.getUserId,
             },
             this.config
           )
@@ -160,35 +161,25 @@ export default {
     userName: function () {
       return getUserName(this.data.name);
     },
-    userImage: function () {
-      if (this.data.image) {
-        console.log(this.data.image);
-        return this.data.image;
+    getUserId: function () {
+      console.log("Get UserId Changes");
+      return this.context.userId ?? null;
+    },
+  },
+  watch: {
+    getUserId: function (newId) {
+      if (this.id !== newId) {
+        this.tab = "tweets";
+        this.getUserInfo();
       }
-      return user_img;
     },
   },
   created: function () {
+    this.tab = "tweets";
     this.getUserInfo();
-    console.log(this.$route);
-    this.$watch(
-      () => this.$route.params,
-      (toParams) => {
-        if (this.id !== toParams.userId) {
-          this.id = toParams.userId;
-          this.getUserInfo();
-        }
-      }
-    );
   },
-  props: {
-    user_id: {
-      type: String,
-      required: true,
-    },
-  },
-  mounted: function () {
-    // this.getUserInfo();
+  destroyed: function () {
+    console.log("Profile Header Destroyed");
   },
 };
 </script>

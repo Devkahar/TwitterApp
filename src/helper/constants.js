@@ -14,10 +14,17 @@ const user_img =
 const getUserName = function (name) {
   return "@" + name.split(" ").join("").toLowerCase();
 };
+const getImgUrl = function (url) {
+  console.log(url);
+  if (!url) return BASE_URL + user_img;
+  if (url[0] !== "/") return BASE_URL + "/" + url;
+  return BASE_URL + url;
+};
 module.exports = {
   ROUTES_CONSTANTS,
   BASE_URL,
   user_img,
   userProfilePath,
   getUserName,
+  getImgUrl,
 };

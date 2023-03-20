@@ -1,19 +1,17 @@
 <template>
   <div class="p-5 flex border_bottom">
-    <div class="h-12 w-12 rounded">
-      <img :src="user_img" alt="" class="h-full w-full" />
+    <div class="w-1/12 pr-1">
+      <UserImage :url="profile_url" />
     </div>
-    <div class="ml-2 w-full">
+    <div class="w-10/12">
       <UserName
         :name="name"
         :subInfo="`@${getUserName} ${getDate}`"
         :small="true"
         :handle_click="visit_user_profile"
       />
-      <p>{{ text }}</p>
-      <div class="post_img_box my-3" v-if="post_img !== null">
-        <img :src="postImgUrl" alt="" class="post_img" />
-      </div>
+      <p>{{ tweet_content }}</p>
+      <PostImage :url="post_img" v-if="post_img" />
       <div class="w-100 flex justify-between pr-24 pl-12">
         <div class="flex items-center">
           <ReplyButton />
@@ -29,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="relative" v-if="performAction">
+    <div class="relative w-1/12" v-if="performAction">
       <div class="cursor-pointer" @click="toggleSuggestion">
         <svg
           viewBox="0 0 24 24"
@@ -51,10 +49,10 @@
             class="p-2 cursor-pointer border_bottom"
             @click="editTweetHandler"
           >
-            <h1 class="text-base">Edit</h1>
+            <h1 class="T-base">Edit</h1>
           </div>
           <div class="p-2 cursor-pointer" @click="deleteTweetHandler">
-            <h1 class="text-base">Delete</h1>
+            <h1 class="T-base">Delete</h1>
           </div>
         </div>
       </div>
@@ -63,16 +61,14 @@
 </template>
 
 <script>
-import UserName from "./UsernameComponent.vue";
-import ReplyButton from "./ReplyButton.vue";
-import RetweetButton from "./RetweetButton.vue";
-import LikeButton from "./LikeButton.vue";
-import {
-  BASE_URL,
-  userProfilePath,
-  user_img as dummy_img,
-} from "@/helper/constants";
-import { getCreatedDate } from "@/helper/util";
+
+import UserName from "@/components/UsernameComponent.vue";
+import ReplyButton from "@/components/ReplyButton.vue";
+import RetweetButton from "@/components/RetweetButton.vue";
+import LikeButton from "@/components/LikeButton.vue";
+import { BASE_URL, userProfilePath, getImgUrl } from "@/helper/constants";
+import UserImage from "@/components/UserImage.vue";
+import PostImage from "./PostImage.vue";
 export default {
   name: "TweetComponent",
   data: function () {
@@ -103,22 +99,15 @@ export default {
     getUserName: function () {
       return this.name.split(" ").join("").toLowerCase();
     },
-    user_img: function () {
-      if (this.profile_url) {
-        return `${BASE_URL}${this.profile_url}`;
-      }
-      return `${BASE_URL}${dummy_img}`;
-    },
     postImgUrl: function () {
-      if (this.post_img[0] !== "/") return `${BASE_URL}/${this.post_img}`;
-      return `${BASE_URL}${this.post_img}`;
+      return getImgUrl(this.post_img);
     },
     getDate: function () {
       return getCreatedDate(this.createdAt);
     },
   },
   props: {
-    text: {
+    tweet_content: {
       type: String,
       required: true,
     },
@@ -178,6 +167,8 @@ export default {
     ReplyButton,
     RetweetButton,
     LikeButton,
+    UserImage,
+    PostImage,
   },
 };
 </script>
@@ -186,25 +177,11 @@ export default {
 .border_bottom {
   border-bottom: 0.5px solid #eee;
 }
-.post_img_box {
-  max-width: 510px;
-  max-height: 750px;
-  width: max-content;
-  border-radius: 18px;
-  -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
-  -moz-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
-  box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
-  border: 0.5px solid #000;
-}
-.post_img {
-  object-fit: contain;
-  border-radius: 18px;
-}
 .action-buttons-box {
   border: 1px solid #eee;
   position: absolute;
   top: 1%;
-  left: -800%;
+  left: -290%;
   z-index: 10;
   background-color: #fff;
   width: 120px;
