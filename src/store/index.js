@@ -33,8 +33,8 @@ export default new Vuex.Store({
       return `${state.userInfo?.name}`;
     },
     user_img: function (state) {
-      if (state.userInfo.avatar) {
-        return state.userInfo.avatar;
+      if (state.userInfo.image) {
+        return state.userInfo.image;
       }
       return user_img;
     },

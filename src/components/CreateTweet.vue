@@ -14,6 +14,14 @@
           <SpinnerComponent v-if="img_loading" />
           <div class="post_img_box my-3" v-if="post_img">
             <img :src="postImgUrl" alt="" class="post_img" />
+            <div class="text-2xl cross p-2" @click="removeImage">
+              <a-button
+                type="primary"
+                shape="circle"
+                icon="close"
+                :size="'large'"
+              />
+            </div>
           </div>
         </div>
         <div class="flex justify-between items-center w-full">
@@ -24,6 +32,7 @@
                 accept="image/jpeg/png/jpg"
                 class="file-hidden absolute"
                 @change="changeFileHandler"
+                id="uploadImage"
               />
             </i>
 
@@ -43,7 +52,7 @@
 <script>
 import Alert from "@/components/AlertComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
-import { BASE_URL } from "@/helper/constants";
+import { BASE_URL, getImgUrl } from "@/helper/constants";
 import axios from "axios";
 import SpinnerComponent from "./SpinnerComponent.vue";
 
@@ -67,6 +76,10 @@ export default {
     uploadFile: function (file) {
       console.log(file);
       this.fileList[0].status = "done";
+    },
+    removeImage: function () {
+      this.post_img = "";
+      document.getElementById("uploadImage").value = "";
     },
     changeFileHandler: async function (event) {
       let img = event.target.files[0];
@@ -126,10 +139,10 @@ export default {
   },
   computed: {
     getUserImage: function () {
-      return `${BASE_URL}${this.user_img}`;
+      return getImgUrl(this.user_img);
     },
     postImgUrl: function () {
-      return `${BASE_URL}${this.post_img}`;
+      return getImgUrl(this.post_img);
     },
   },
   props: {

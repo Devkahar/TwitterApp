@@ -5,6 +5,7 @@
     @click="onClickHandler"
     :loading="loading"
     size="large"
+    :html-type="htmlType"
   >
     <slot> </slot>
   </a-button>
@@ -26,6 +27,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    htmlType: {
+      type: String,
+      default: "submit",
     },
   },
 };

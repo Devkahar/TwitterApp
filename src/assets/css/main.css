@@ -13,3 +13,30 @@
 .rounded {
   clip-path: circle(48%);
 }
+.post_img_box {
+  max-width: 510px;
+  max-height: 750px;
+  width: max-content;
+  border-radius: 18px;
+  -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  -moz-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
+  border: 0.5px solid #000;
+  position: relative;
+
+}
+.post_img {
+  object-fit: contain;
+  border-radius: 18px;
+}
+.post_img_box_small {
+  max-width: 400px;
+  max-height: 400px;
+  margin-left: 50px;
+}
+.cross {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: #fff;
+}

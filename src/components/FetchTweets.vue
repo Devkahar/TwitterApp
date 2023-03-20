@@ -16,7 +16,7 @@
         :author_id="tweet.author._id"
         :delete_tweet="deleteTweet"
         :edit_tweet="editTweet"
-        :createdAt="tweet.createdAt"
+        :createdAt="tweet.createdAt ?? ''"
         :tweet_content="tweet.text"
       />
     </div>
@@ -130,8 +130,10 @@ export default {
     editTweet: function () {},
   },
   created: function () {
-    this.scrollFetchTweets();
     this.reloadTweets();
+  },
+  mounted: function () {
+    this.scrollFetchTweets();
   },
   watch: {
     getTab: function (newTab) {
