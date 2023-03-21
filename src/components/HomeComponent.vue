@@ -21,10 +21,10 @@ export default {
     FetchTweets,
     CreateTweet,
   },
-  data() {
-    return {
-      isAuth: this.$store.getters.isUserAuth,
-    };
+  computed: {
+    isAuth: function () {
+      return this.$store.getters.isUserAuth;
+    },
   },
 };
 </script>

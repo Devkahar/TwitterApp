@@ -4,7 +4,8 @@
     shape="round"
     @click="onClickHandler"
     :loading="loading"
-    :size="size"
+    size="large"
+    :html-type="htmlType"
   >
     <slot> </slot>
   </a-button>
@@ -30,6 +31,10 @@ export default {
     size: {
       type: String,
       default: "large",
+      htmlType: {
+        type: String,
+        default: "submit",
+      },
     },
   },
 };

@@ -1,10 +1,10 @@
-"use strict";
-const getCreatedDate = function (createdDate) {
+const getCreatedDate = function (createdDate, edited) {
+  if (!createdDate) return "";
   const date = new Date(createdDate);
   const dateString = date.toString();
   let dateArray = dateString.split(" ").slice(0, 5);
   let hour = Number.parseInt(dateArray[4].split(":")[0]);
-  let min = Number.parseInt(dateArray[4].split(":")[1]);
+  let min = dateArray[4].split(":")[1];
   let hourStr = "";
   if (hour > 12) {
     hourStr = hour - 12 + ":" + min + " PM";
@@ -13,6 +13,7 @@ const getCreatedDate = function (createdDate) {
   }
   let dayStr = date.toLocaleDateString();
   console.log(dayStr, hourStr);
+  if (edited) return "Edited " + dayStr + " " + hourStr;
   return dayStr + " " + hourStr;
 };
 

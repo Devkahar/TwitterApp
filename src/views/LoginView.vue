@@ -59,10 +59,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.form-box {
-  border: 5px solid lightblue;
-  border-radius: 10px;
-}
-</style>
