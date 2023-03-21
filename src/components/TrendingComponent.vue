@@ -36,7 +36,6 @@
       <div class="p-3">
         <p class="text-lg font-bold">Who to Follow</p>
       </div>
-
       <!-- <div class="w-full flex hover:bg-lighter p-3 border-t border-lighter"> -->
       <!-- v-for="friend in friends"
         v-bind:key="friend.id"
@@ -54,8 +53,8 @@
           :limitName="true"
         >
           <FollowingButtonComponent
-            :is_following="false"
-            :click_handler="() => {}"
+            :is_following="user.isFollowing"
+            :click_handler="() => followUserHandler(user._id)"
           />
         </SearchItem>
       </div>
@@ -82,54 +81,12 @@ export default {
       config: this.$store.getters.config,
       isAuth: this.$store.getters.isUserAuth,
       id: this.userId,
-
       userList: [],
-
       trending: [
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
       ],
-
-      // friends: [
-      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-      // ],
-      following: [
-        {
-          src: "image-user.jpg",
-          name: "Elon Musk",
-          handle: "@elon",
-          time: "20 min",
-          tweet: "going to mars 🚀",
-          comments: "1,000",
-          retweets: "550",
-          like: "1,000,003",
-        },
-        {
-          src: "image-user.jpg",
-          name: "hiral",
-          handle: "@hiral",
-          time: "20 min",
-          tweet: "setting up twitter ",
-          comments: "1,000",
-          retweets: "550",
-          like: "1,000,003",
-        },
-        {
-          src: "image-user.jpg",
-          name: "hiral",
-          handle: "@hiral",
-          time: "20 min",
-          tweet: "twit 🤖",
-          comments: "1,000",
-          retweets: "550",
-          like: "1,000,003",
-        },
-      ],
-      tweets: [{ content: "tweeted!" }],
-      tweet: { content: "" },
     };
   },
   computed: {
@@ -148,7 +105,10 @@ export default {
         );
         if (res) {
           const data = res.data.data;
-          this.userList = data;
+          this.userList = data.map((el) => ({
+            ...el,
+            isFollowing: false,
+          }));
           this.loading = false;
           console.log(data);
           console.log("User Suggestion", res);
@@ -159,12 +119,49 @@ export default {
         console.log("Query User Error", error);
       }
     },
-    suggestFollow: function () {
+    followUserHandler: function (_id) {
       if (!this.isAuth) {
         this.$router.push({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
         return;
       }
-      // this.$store.dispatch("followSuggestion", { _id });
+      const idx = this.userList.findIndex((el) => el._id === _id);
+      if (this.userList[idx].isFollowing) {
+        this.userList[idx].isFollowing = false;
+        this.unfollowUser(_id);
+      } else {
+        this.userList[idx].isFollowing = true;
+        this.followUser(_id);
+      }
+    },
+    followUser: async function (_id) {
+      try {
+        console.log(
+          await axios.post(
+            `${BASE_URL}/api/follow/`,
+            {
+              user_id: _id,
+            },
+            this.config
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    unfollowUser: async function (_id) {
+      try {
+        console.log(
+          await axios.post(
+            `${BASE_URL}/api/unfollow/`,
+            {
+              user_id: _id,
+            },
+            this.config
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   created: function () {
