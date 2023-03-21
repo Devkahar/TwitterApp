@@ -51,7 +51,7 @@
           :name="user.name ?? ''"
           :profile_url="user.image ?? ''"
           :user_id="user._id"
-          :limitName="true"
+          :limitName="false"
         >
           <FollowingButtonComponent
             :is_following="false"
