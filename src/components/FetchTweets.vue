@@ -1,5 +1,22 @@
 <template>
   <div class="">
+    <a-modal
+      :visible="visible"
+      :footer="null"
+      width="700px"
+      @cancel="closeModal"
+    >
+      <div class="p-5" v-if="visible">
+        <CreateTweet
+          :post_id="getEditPostId"
+          :props_text="getEditedContent"
+          :prop_post_img="getEditPostUrl"
+          :fullBorder="true"
+          :editTweet="true"
+          :successHandler="editTweetSuccessHandler"
+        />
+      </div>
+    </a-modal>
     <div v-if="tweetList && tab">
       <Tweet
         v-bind:key="tweet.uuid"
@@ -16,7 +33,8 @@
         :author_id="tweet.author._id"
         :delete_tweet="deleteTweet"
         :edit_tweet="editTweet"
-        :createdAt="tweet.createdAt ?? ''"
+        :edited="tweet.createdAt !== tweet.updatedAt"
+        :createdAt="tweet.updatedAt ?? ''"
         :tweet_content="tweet.text"
       />
     </div>
@@ -40,6 +58,8 @@ import Tweet from "./TweetComponent.vue";
 import { ROUTES_CONSTANTS } from "@/helper/constants";
 import Alert from "@/components/AlertComponent.vue";
 import Spinner from "./SpinnerComponent.vue";
+import CreateTweet from "./CreateTweet.vue";
+// import { ref } from "vue";
 export default {
   name: "FetchtweetComponent",
   data: function () {
@@ -48,6 +68,10 @@ export default {
       isAuth: this.$store.getters.isUserAuth,
       tb: this.tab,
       id: this.userId,
+      visible: false,
+      edit_id: "",
+      edit_content: "",
+      edit_post_url: "",
     };
   },
   computed: {
@@ -72,11 +96,21 @@ export default {
     limit: function () {
       return this.$store.getters.limit;
     },
+    getEditPostUrl: function () {
+      return this.edit_post_url;
+    },
+    getEditPostId: function () {
+      return this.edit_id;
+    },
+    getEditedContent: function () {
+      return this.edit_content;
+    },
   },
   components: {
     Tweet,
     Alert,
     Spinner,
+    CreateTweet,
   },
   props: {
     tab: {
@@ -127,7 +161,21 @@ export default {
     deleteTweet: function (_id) {
       this.$store.dispatch("deleteTweet", { _id });
     },
-    editTweet: function () {},
+    editTweet: function (_id) {
+      const tweet = this.tweetList.find((el) => el._id === _id);
+      this.edit_id = tweet._id;
+      this.edit_content = tweet.text;
+      this.edit_post_url = tweet.image;
+      this.visible = true;
+    },
+    closeModal: function () {
+      console.log("Model Close");
+      this.visible = false;
+    },
+    editTweetSuccessHandler: function () {
+      this.closeModal();
+      this.reloadTweets();
+    },
   },
   created: function () {
     this.reloadTweets();

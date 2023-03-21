@@ -1,4 +1,4 @@
-const getCreatedDate = function (createdDate) {
+const getCreatedDate = function (createdDate, edited) {
   if (!createdDate) return "";
   const date = new Date(createdDate);
   const dateString = date.toString();
@@ -13,6 +13,7 @@ const getCreatedDate = function (createdDate) {
   }
   let dayStr = date.toLocaleDateString();
   console.log(dayStr, hourStr);
+  if (edited) return "Edited " + dayStr + " " + hourStr;
   return dayStr + " " + hourStr;
 };
 module.exports = {

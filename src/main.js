@@ -15,6 +15,7 @@ import {
   Dropdown,
   Upload,
   Form,
+  Modal,
 } from "ant-design-vue/lib";
 import UUID from "vue-uuid";
 Vue.component(Button.name, Button);
@@ -30,6 +31,7 @@ Vue.component(Dropdown.name, Dropdown);
 Vue.component(Upload.name, Upload);
 Vue.component(Form.name, Form);
 Vue.component(Form.Item.name, Form.Item);
+Vue.component(Modal.name, Modal);
 Vue.config.productionTip = false;
 Vue.use(UUID);
 Vue.mixin({

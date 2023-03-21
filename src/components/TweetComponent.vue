@@ -90,6 +90,7 @@ export default {
     },
     editTweetHandler: function () {
       this.edit_tweet(this._id);
+      this.showSuggestion = false;
     },
     deleteTweetHandler: function () {
       this.delete_tweet(this._id);
@@ -103,7 +104,7 @@ export default {
       return getImgUrl(this.post_img);
     },
     getDate: function () {
-      return getCreatedDate(this.createdAt);
+      return getCreatedDate(this.createdAt, this.edited);
     },
   },
   props: {
@@ -159,6 +160,10 @@ export default {
     },
     createdAt: {
       type: String,
+      required: true,
+    },
+    edited: {
+      type: Boolean,
       required: true,
     },
   },
