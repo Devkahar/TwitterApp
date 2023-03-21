@@ -4,7 +4,7 @@
     shape="round"
     @click="onClickHandler"
     :loading="loading"
-    size="large"
+    :size="size"
   >
     <slot> </slot>
   </a-button>
@@ -26,6 +26,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    size: {
+      type: String,
+      default: "large",
     },
   },
 };

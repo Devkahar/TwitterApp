@@ -49,7 +49,7 @@ export default {
 
 <style>
 .btn {
-  padding: 8px 15px;
+  padding: 8px 10px;
   border: 0.5px solid rgb(218, 218, 218) !important;
   border-radius: 50px;
   color: #000;

@@ -6,15 +6,21 @@
     <div v-else-if="loading" class="w-full">
       <SpinnerComponent />
     </div>
-    <div v-else class="flex" @click="visit_user_profile">
-      <div class="h-12 w-12 rounded mr-5">
-        <img :src="user_img" alt="" class="h-full w-full" />
+    <div v-else class="w-full flex justify-between items-center">
+      <div class="flex" @click="visit_user_profile">
+        <div class="h-12 w-12 rounded mr-2">
+          <img :src="user_img" alt="" class="h-full w-full" />
+        </div>
+        <UsernameComponent
+          :name="name"
+          :sub-info="getUserName"
+          :limitName="limitName"
+          :title_basic="true"
+        />
       </div>
-      <UsernameComponent
-        :name="name"
-        :sub-info="getUserName"
-        :title_basic="true"
-      />
+      <slot>
+        <div></div>
+      </slot>
     </div>
   </div>
 </template>
@@ -32,7 +38,11 @@ export default {
   },
   computed: {
     getUserName: function () {
-      return "@" + this.name.split(" ").join("").toLowerCase();
+      let str = this.name.split(" ").join("").toLowerCase();
+      if (this.limitName && str.length >= 4) {
+        return "@" + str.slice(0, 4) + "...";
+      }
+      return "@" + str;
     },
     user_img: function () {
       if (this.profile_url) {
@@ -71,6 +81,10 @@ export default {
       default: false,
     },
     loading: {
+      type: Boolean,
+      default: false,
+    },
+    limitName: {
       type: Boolean,
       default: false,
     },

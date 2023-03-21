@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full border-l border-lighter py-2 px-6 scroll hide-scroll">
+  <div class="h-full border-l border-lighter py-2 px-3 scroll hide-scroll">
     <SearchTweet />
     <div class="w-full rounded-lg bg-lightest">
       <div class="flex items-center justify-between p-3">
@@ -32,56 +32,70 @@
       </button>
     </div>
     <div class="w-full rounded-lg bg-lightest my-4">
+      <!-- <SearchItem :name="''" :profile_url="''" /> -->
       <div class="p-3">
         <p class="text-lg font-bold">Who to Follow</p>
       </div>
-      <button
-        v-for="friend in friends"
+
+      <!-- <div class="w-full flex hover:bg-lighter p-3 border-t border-lighter"> -->
+      <!-- v-for="friend in friends"
         v-bind:key="friend.id"
-        @click="() => (id = tab.id)"
-        class="w-full flex hover:bg-lighter p-3 border-t border-lighter"
-      >
-        <img
+        @click="() => (id = _userid.id)" -->
+
+      <!-- <img
           :src="`${friend.src}`"
           class="w-12 h-12 rounded-full border border-lighter"
-        />
-        <div class="hidden lg:block ml-4">
-          <p class="text-sm font-bold leading-tight">{{ friend.name }}</p>
-          <p class="text-sm leading-tight">{{ friend.handle }}</p>
-        </div>
-        <button
-          class="ml-auto text-sm text-blue py-1 px-4 rounded-full border-2 border-blue"
+        /> -->
+      <div v-for="user in userList" v-bind:key="user._id" class="flex flex-col">
+        <SearchItem
+          :name="user.name ?? ''"
+          :profile_url="user.image ?? ''"
+          :user_id="user._id"
+          :limitName="true"
         >
-          Follow
-        </button>
-      </button>
-      <button
-        class="p-3 w-full hover:bg-lighter text-left text-blue border-t border-lighter"
-      >
-        Show More
-      </button>
+          <FollowingButtonComponent
+            :is_following="false"
+            :click_handler="() => {}"
+          />
+        </SearchItem>
+      </div>
     </div>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import SearchTweet from "./SearchTweet.vue";
-
+import { BASE_URL } from "@/helper/constants";
+import { ROUTES_CONSTANTS } from "@/helper/constants";
+import axios from "axios";
+import SearchItem from "./SearchItem.vue";
+// import ButtonComponent from "./ButtonComponent.vue";
+import FollowingButtonComponent from "./FollowingButtonComponent.vue";
 export default {
   name: "TrendingComponent",
   data: function () {
     return {
+      loading: false,
+      userid: true,
+      error: false,
+      config: this.$store.getters.config,
+      isAuth: this.$store.getters.isUserAuth,
+      id: this.userId,
+
+      userList: [],
+
       trending: [
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
         { top: "Trending", title: "Beyonce", bottom: "25.4k tweets" },
       ],
 
-      friends: [
-        { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-        { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-        { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
-      ],
+      // friends: [
+      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
+      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
+      //   { src: "image-user.jpeg", name: " hiral", handle: "@hiral" },
+      // ],
       following: [
         {
           src: "image-user.jpg",
@@ -118,8 +132,49 @@ export default {
       tweet: { content: "" },
     };
   },
+  computed: {
+    getUserId: function () {
+      return this.userId ?? null;
+    },
+  },
+  methods: {
+    suggestUser: async function () {
+      try {
+        this.error = false;
+        const res = await axios.post(
+          `${BASE_URL}/api/user/follow/suggestion/`,
+          {},
+          this.config
+        );
+        if (res) {
+          const data = res.data.data;
+          this.userList = data;
+          this.loading = false;
+          console.log(data);
+          console.log("User Suggestion", res);
+        }
+      } catch (error) {
+        this.error = true;
+        this.loading = false;
+        console.log("Query User Error", error);
+      }
+    },
+    suggestFollow: function () {
+      if (!this.isAuth) {
+        this.$router.push({ name: ROUTES_CONSTANTS.SIGNUP_PAGE });
+        return;
+      }
+      // this.$store.dispatch("followSuggestion", { _id });
+    },
+  },
+  created: function () {
+    this.suggestUser();
+  },
   components: {
     SearchTweet,
+    SearchItem,
+    // ButtonComponent,
+    FollowingButtonComponent,
   },
 };
 </script>

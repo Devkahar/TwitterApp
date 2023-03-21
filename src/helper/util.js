@@ -16,6 +16,13 @@ const getCreatedDate = function (createdDate) {
   return dayStr + " " + hourStr;
 };
 
+const getDottedString = function (str) {
+  if (str.length >= 4) {
+    return str.slice(0, 4) + "...";
+  }
+  return str;
+};
 module.exports = {
   getCreatedDate,
+  getDottedString,
 };

@@ -130,8 +130,10 @@ export default {
     editTweet: function () {},
   },
   created: function () {
-    this.scrollFetchTweets();
     this.reloadTweets();
+  },
+  mounted: function () {
+    this.scrollFetchTweets();
   },
   watch: {
     getTab: function (newTab) {

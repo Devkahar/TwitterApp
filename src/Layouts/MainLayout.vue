@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-28 mx-auto">
+  <div class="container px-20 mx-auto">
     <div class="flex">
       <!-- side nav -->
       <div class="w-3/12">

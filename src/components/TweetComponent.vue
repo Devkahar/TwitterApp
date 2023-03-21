@@ -61,7 +61,6 @@
 </template>
 
 <script>
-
 import UserName from "@/components/UsernameComponent.vue";
 import ReplyButton from "@/components/ReplyButton.vue";
 import RetweetButton from "@/components/RetweetButton.vue";
@@ -69,6 +68,7 @@ import LikeButton from "@/components/LikeButton.vue";
 import { BASE_URL, userProfilePath, getImgUrl } from "@/helper/constants";
 import UserImage from "@/components/UserImage.vue";
 import PostImage from "./PostImage.vue";
+import { getCreatedDate } from "@/helper/util";
 export default {
   name: "TweetComponent",
   data: function () {

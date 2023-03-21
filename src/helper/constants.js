@@ -20,6 +20,9 @@ const getImgUrl = function (url) {
   if (url[0] !== "/") return BASE_URL + "/" + url;
   return BASE_URL + url;
 };
+const getUserSuggestion = function (_id) {
+  return `/user/${_id}/`;
+};
 module.exports = {
   ROUTES_CONSTANTS,
   BASE_URL,
@@ -27,4 +30,5 @@ module.exports = {
   userProfilePath,
   getUserName,
   getImgUrl,
+  getUserSuggestion,
 };

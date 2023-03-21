@@ -4,14 +4,11 @@
     @click="handle_click"
   >
     <div :class="['head-name flex items-center mb-0.5', small && 'mr-2']">
-      <h1
-        :class="[
-          'font-bold mb-0 mr-1',
-          small || title_basic ? 'text-base' : 'text-2xl',
-        ]"
+      <div
+        :class="['font-bold mb-0 mr-1', small || title_basic ? '' : 'text-2xl']"
       >
-        {{ name }}
-      </h1>
+        {{ limitName ? getName : name }}
+      </div>
       <Badge />
     </div>
     <div class="tweet-count">{{ subInfo }}</div>
@@ -19,11 +16,17 @@
 </template>
 <script>
 import Badge from "@/components/BadgeComponent.vue";
+import { getDottedString } from "@/helper/util";
 
 export default {
   name: "UserNameComponent",
   components: {
     Badge,
+  },
+  computed: {
+    getName: function () {
+      return getDottedString(this.name);
+    },
   },
   props: {
     name: {
@@ -43,6 +46,10 @@ export default {
       default: () => {},
     },
     title_basic: {
+      type: Boolean,
+      default: false,
+    },
+    limitName: {
       type: Boolean,
       default: false,
     },
