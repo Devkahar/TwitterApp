@@ -31,11 +31,19 @@
       </button>
     </div>
     <LogoutPopup v-if="isAuth" />
+    <p v-else>
+      <router-link to="/signup"
+        ><ButtonComponent :clickHandler="loginHandler" :loading="loading"
+          >Create an account</ButtonComponent
+        ></router-link
+      >
+    </p>
   </div>
 </template>
 
 <script>
 import { userProfilePath } from "@/helper/constants";
+import ButtonComponent from "./ButtonComponent.vue";
 import LogoutPopup from "./LogoutPopup.vue";
 
 export default {
@@ -74,6 +82,7 @@ export default {
       }
     },
   },
-  components: { LogoutPopup },
+  components: { LogoutPopup, ButtonComponent },
 };
 </script>
+<style scoped></style>
