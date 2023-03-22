@@ -33,12 +33,17 @@
         <i class="fas fa-check ml-auto test-blue"></i>
       </button>
       <button
-        @click="dropdown = false"
+        @click="editProfile"
         class="w-full text-left hover:bg-lightest border-t border-lighter p-3 test-sm focus:outline-none"
       >
-        Add an existing account
+        Edit Profile
       </button>
-
+      <button
+        @click="editPassword"
+        class="w-full text-left hover:bg-lightest border-t border-lighter p-3 test-sm focus:outline-none"
+      >
+        Change Password
+      </button>
       <button
         @click="logoutUser"
         class="w-full text-left hover:bg-lightest border-t border-lighter p-3 test-sm focus:outline-none"
@@ -64,6 +69,12 @@ export default {
     logoutUser: function () {
       this.$store.dispatch({ type: "logout" });
       this.$router.push({ name: ROUTES_CONSTANTS.LOGIN_PAGE });
+    },
+    editProfile: function () {
+      this.$router.push({ name: ROUTES_CONSTANTS.EDIT_PAGE });
+    },
+    editPassword: function () {
+      this.$router.push({ name: ROUTES_CONSTANTS.EDIT_PASSWORD_PAGE });
     },
   },
   computed: {

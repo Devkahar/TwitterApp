@@ -31,10 +31,10 @@ export default {
     size: {
       type: String,
       default: "large",
-      htmlType: {
-        type: String,
-        default: "submit",
-      },
+    },
+    htmlType: {
+      type: String,
+      default: "submit",
     },
   },
 };

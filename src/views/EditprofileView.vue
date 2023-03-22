@@ -1,33 +1,34 @@
 <template>
   <div class="">
-    <h1 class="text-5xl">Sign Up</h1>
+    <h1 class="text-5xl">Edit User Info</h1>
     <FormComonent
-      :formInputs="signUpFormInput"
+      :formInputs="userInfoFormInput"
       :loading="loading"
       :message="message"
-      :successHandler="signupUser"
+      :successHandler="editUserInfo"
       :error="error"
-      :buttonName="'Sign Up'"
+      :buttonName="'Edit Info'"
       :getContext="setFormContext"
+      :postImage="image"
     />
-    <p>
-      <router-link to="/login">Already have an account? Sign In</router-link>
-    </p>
   </div>
 </template>
 <script>
-import { checkBio, checkName, checkPassword } from "@/helper/validation";
+import { checkBio, checkName } from "@/helper/validation";
 import { uuid } from "vue-uuid";
 import axios from "axios";
-import { BASE_URL, getImgUrl } from "@/helper/constants";
+import { BASE_URL } from "@/helper/constants";
 import FormComonent from "@/components/FormComonent.vue";
 export default {
+  name: "EditProfile",
   data: function () {
     return {
       error: false,
       message: "",
       loading: false,
-      signUpFormInput: [
+      config: this.$store.getters.config,
+      image: this.$store.state.userState.userInfo.image,
+      userInfoFormInput: [
         {
           id: uuid.v4(),
           label: "User Name",
@@ -35,6 +36,7 @@ export default {
           decorator: [
             "username",
             {
+              initialValue: this.$store.state.userState.userInfo.name,
               rules: [
                 {
                   required: true,
@@ -57,6 +59,7 @@ export default {
           decorator: [
             "email",
             {
+              initialValue: this.$store.state.userState.userInfo.email,
               rules: [
                 {
                   type: "email",
@@ -70,46 +73,6 @@ export default {
             },
           ],
         },
-        {
-          id: uuid.v4(),
-          label: "Password",
-          placeholder: "Enter Password",
-          type: "password",
-          decorator: [
-            "password",
-            {
-              rules: [
-                {
-                  required: true,
-                  message: "Please Enter your password!",
-                },
-                {
-                  validator: this.validateToNextPassword,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: uuid.v4(),
-          label: "Confirm Password: ",
-          placeholder: "Confirm Password",
-          decorator: [
-            "confirm",
-            {
-              rules: [
-                {
-                  required: true,
-                  message: "Please confirm your password!",
-                },
-                {
-                  validator: this.compareToFirstPassword,
-                },
-              ],
-            },
-          ],
-          type: "password",
-        },
         { type: "upload" },
         {
           id: uuid.v4(),
@@ -118,6 +81,7 @@ export default {
           decorator: [
             "bio",
             {
+              initialValue: this.$store.state.userState.userInfo.bio,
               rules: [
                 {
                   required: true,
@@ -136,21 +100,28 @@ export default {
     };
   },
   methods: {
-    signupUser: async function (values) {
+    editUserInfo: async function (values) {
       console.log(values);
       try {
         this.loading = true;
-        const res = await axios.post(`${BASE_URL}/api/user/signup`, {
-          name: values.username,
-          password: values.password,
-          email: values.email,
-          image: values.post_img,
-          bio: values.bio,
-        });
+        const res = await axios.post(
+          `${BASE_URL}/api/user/change/info`,
+          {
+            name: values.username,
+            email: values.email,
+            image: values.post_img,
+            bio: values.bio,
+          },
+          this.config
+        );
         if (res.status === 201) {
           console.log(res);
-          window.localStorage.setItem("userInfo", JSON.stringify(res.data));
-          this.$store.dispatch({ type: "signup" });
+          const data = {
+            ...res.data,
+            token: this.$store.state.userState.userInfo.token,
+          };
+          window.localStorage.setItem("userInfo", JSON.stringify(data));
+          this.$store.dispatch("updateUserInfo");
           this.error = false;
           this.message = "";
           this.loading = false;
@@ -161,23 +132,6 @@ export default {
         this.error = true;
         this.message = "Email Already Exist";
         this.loading = false;
-      }
-    },
-    compareToFirstPassword(rule, value, callback) {
-      const form = this.form;
-      console.log(form.getFieldValue("password"));
-      if (value && value !== form.getFieldValue("password")) {
-        callback("Password does'nt match with provious one.");
-      } else {
-        callback();
-      }
-    },
-    validateToNextPassword(rule, value, callback) {
-      const validPassword = checkPassword(value ?? "");
-      if (validPassword.isValid) {
-        callback();
-      } else {
-        callback(validPassword.error);
       }
     },
     validateUserName(rule, value, callback) {
@@ -201,10 +155,5 @@ export default {
     },
   },
   components: { FormComonent },
-  computed: {
-    getUserImage: function () {
-      return getImgUrl(this.post_img);
-    },
-  },
 };
 </script>

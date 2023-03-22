@@ -76,16 +76,16 @@ export default {
   },
   computed: {
     tweetList: function () {
-      return this.$store.getters.tweetList;
+      return this.$store.state.tweetState.tweetList;
     },
     error: function () {
-      return this.$store.getters.error;
+      return this.$store.state.tweetState.error;
     },
     loading: function () {
-      return this.$store.getters.loading;
+      return this.$store.state.tweetState.loading;
     },
     message: function () {
-      return this.$store.getters.message;
+      return this.$store.state.tweetState.message;
     },
     getTab: function () {
       return this.tab;
@@ -94,7 +94,7 @@ export default {
       return this.userId ?? null;
     },
     limit: function () {
-      return this.$store.getters.limit;
+      return this.$store.state.tweetState.limit;
     },
     getEditPostUrl: function () {
       return this.edit_post_url;
@@ -129,6 +129,12 @@ export default {
         tab: this.getTab,
       });
     },
+    fetchTweets: function () {
+      this.$store.dispatch("fetchTweets", {
+        userId: this.userId,
+        tab: this.getTab,
+      });
+    },
     scrollFetchTweets: function () {
       let ctx = this;
       let time;
@@ -143,10 +149,7 @@ export default {
             if (time) clearTimeout(time);
             ctx.$store.dispatch("setLoading");
             time = setTimeout(() => {
-              ctx.$store.dispatch("fetchTweets", {
-                userId: ctx.userId,
-                tab: ctx.getTab,
-              });
+              ctx.fetchTweets(ctx);
             }, 1000);
           }
         });

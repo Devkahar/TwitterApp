@@ -43,6 +43,35 @@ const routes = [
     },
     props: true,
   },
+  {
+    path: "/edit/profile",
+    name: ROUTES_CONSTANTS.EDIT_PAGE,
+    component: () =>
+      import(/* webpageChunkName:"UserView"*/ "@/views/EditprofileView.vue"),
+    meta: {
+      layout: AuthLayout,
+    },
+    props: true,
+  },
+  {
+    path: "/edit/password",
+    name: ROUTES_CONSTANTS.EDIT_PASSWORD_PAGE,
+    component: () =>
+      import(/* webpageChunkName:"UserView"*/ "@/views/ChangepasswordView.vue"),
+    meta: {
+      layout: AuthLayout,
+    },
+    props: true,
+  },
+  {
+    path: "*",
+    name: ROUTES_CONSTANTS.PAGE_NOT_FOUND,
+    component: () =>
+      import(/* webpageChunkName:"UserView"*/ "@/views/NotfoundView.vue"),
+    meta: {
+      layout: MainLayout,
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -53,7 +82,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const user = store.getters.isUserAuth;
-  console.log("user", user);
   if (
     user &&
     (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE ||

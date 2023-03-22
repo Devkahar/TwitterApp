@@ -17,9 +17,10 @@
       </div>
       <div class="w-full profile-actions mt-6 p-4 flex flex-col items-end">
         <FollowingButton
-          :is_following="data.isFollowing"
-          :click_handler="followHandler"
+          :is_following="getIsFollowing"
+          :click_handler="() => followHandler(getUserId)"
           v-if="curr_user !== getUserId"
+          :_id="getUserId"
         />
       </div>
       <div class="my-4 px-4">
@@ -30,10 +31,10 @@
       </div>
       <div class="px-4 flex flex-row">
         <p class="color-light mr-5">
-          <strong>{{ this.data.following }}</strong> Following
+          <strong>{{ this.getFollowingCount }}</strong> Following
         </p>
         <p class="color-light">
-          <strong>{{ this.data.followers }}</strong> Followers
+          <strong>{{ this.getFollowersCount }}</strong> Followers
         </p>
       </div>
       <Tab :change_tab="changeTabHandler" :curr_tab="tab" />
@@ -101,6 +102,12 @@ export default {
           this.loading = false;
           this.error = false;
           console.log(res.data.userDetails);
+          this.$store.dispatch("setFollow", {
+            followers: this.data.followers,
+            following: this.data.following,
+            isFollowing: this.data.isFollowing,
+            currentUser: this.getUserId,
+          });
         } else {
           throw new Error("User Cannot Be found");
         }
@@ -110,46 +117,12 @@ export default {
         this.message = error.message;
       }
     },
-    followUser: async function () {
-      try {
-        console.log(
-          await axios.post(
-            `${BASE_URL}/api/follow/`,
-            {
-              user_id: this.getUserId,
-            },
-            this.config
-          )
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    unfollowUser: async function () {
-      try {
-        console.log(
-          await axios.post(
-            `${BASE_URL}/api/unfollow/`,
-            {
-              user_id: this.getUserId,
-            },
-            this.config
-          )
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    followHandler: async function () {
-      if (!this.data.isFollowing) {
-        this.data.isFollowing = true;
-        this.followUser();
-        this.data.followers++;
-      } else {
-        this.data.isFollowing = false;
-        this.unfollowUser();
-        this.data.followers--;
-      }
+    followHandler: function (_id) {
+      console.log("Following Action", this.getUserId === this.curr_user);
+      this.$store.dispatch("followUserHandler", {
+        _id,
+        isCurrentUser: this.getUserId === this.curr_user,
+      });
     },
     changeTabHandler: function (newtab) {
       if (newtab !== this.tab) {
@@ -165,10 +138,20 @@ export default {
       console.log("Get UserId Changes");
       return this.context.userId ?? null;
     },
+    getFollowersCount: function () {
+      return this.$store.state.followState.followers;
+    },
+    getFollowingCount: function () {
+      return this.$store.state.followState.following;
+    },
+    getIsFollowing: function () {
+      return this.$store.state.followState.isFollowing;
+    },
   },
   watch: {
     getUserId: function (newId) {
       if (this.id !== newId) {
+        this.id = newId;
         this.tab = "tweets";
         this.getUserInfo();
       }

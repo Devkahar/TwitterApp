@@ -30,9 +30,12 @@
   border-radius: 18px;
 }
 .post_img_box_small {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 200px;
+  max-height: 200px;
   margin-left: 50px;
+}
+.post_img_box_small>img{
+  max-height: 200px;
 }
 .cross {
   position: absolute;

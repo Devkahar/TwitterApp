@@ -3,6 +3,9 @@ const ROUTES_CONSTANTS = {
   SIGNUP_PAGE: "signup",
   HOME_PAGE: "home",
   USER_PAGE: "user",
+  PAGE_NOT_FOUND: "pageNotFound",
+  EDIT_PAGE: "editProfile",
+  EDIT_PASSWORD_PAGE: "editPasswordPage",
 };
 
 const BASE_URL = "http://localhost:4000";
