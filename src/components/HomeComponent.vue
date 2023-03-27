@@ -1,17 +1,21 @@
 <template>
-  <div class="">
-    <div class="">
-      <div class="px-5 py-3 mb-5 border-b border-lighter">
+  <div class="home-container">
+    <div class="home-head">
+      <div
+        class="px-5 py-3 border-b border-lighter flex items-center justify-between"
+      >
         <h1 class="text-xl font-bold">Home</h1>
         <i class="far fa-star text-xl text-blue"></i>
       </div>
-      <div class="createTweet">
+      <div class="bg-white">
         <CreateTweet v-if="isAuth" />
       </div>
     </div>
-    <div class="mt-40"><FetchTweets /></div>
+    <div class="home-head--block"></div>
+    <FetchTweets />
   </div>
 </template>
+
 <script>
 import FetchTweets from "@/components/FetchTweets.vue";
 import CreateTweet from "@/components/CreateTweet.vue";
@@ -28,27 +32,19 @@ export default {
   },
 };
 </script>
-<style scoped>
-.createTweet {
-  background-color: white;
-  overflow-y: hidden;
-  position: fixed;
-  z-index: 1000;
-  width: inherit;
+
+<style>
+.home-container {
+  position: relative;
 }
-/* .home {
-  padding: 5px 3px;
-  margin-bottom: 5px;
-  box-sizing: border-box;
-  border: whitesmoke;
-  -ms-flex-item-align: center;
-  flex-basis: justify-between;
+.home-head {
   position: fixed;
-  top: 5px;
-  width: inherit;
+  top: 0;
+  background-color: #fff;
   z-index: 1000;
-  overflow-y: hidden;
-} */
+  width: 40.8%;
+}
+.home-head--block {
+  margin-bottom: 13rem;
+}
 </style>
-<!-- bg-white overflow-y-hidden position-fixed h-full margin-0 -->
-<!-- -->

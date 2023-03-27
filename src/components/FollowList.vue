@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full rounded-lg bg-lightest my-4">
+  <div class="w-full rounded-lg bg-lightest my-4 scroll-y" id="followList">
     <div class="p-3">
       <p class="text-lg font-bold">Who to Follow</p>
     </div>
@@ -45,6 +45,9 @@ export default {
     error: function () {
       return this.$store.state.followState.error;
     },
+    limit: function () {
+      return this.$store.state.followState.limit;
+    },
   },
   methods: {
     suggestUser: async function () {
@@ -74,10 +77,33 @@ export default {
     followUserHandler: function (_id) {
       this.$store.dispatch("followUserHandler", { _id });
     },
+    scrollFetchFolowers: function () {
+      let ctx = this;
+      let time;
+      document
+        .getElementById("followList")
+        .addEventListener("scroll", function () {
+          let scroll =
+            document.documentElement.scrollTop +
+              document.documentElement.offsetHeight >=
+            document.body.scrollHeight - 500;
+          console.log("FollowList", scroll);
+          if (scroll && !ctx.limit) {
+            if (time) clearTimeout(time);
+            ctx.$store.dispatch("setFollowLoadingState");
+            time = setTimeout(() => {
+              ctx.$store.dispatch("suggestFollowUser");
+            }, 1000);
+          }
+        });
+    },
   },
   created: function () {
     this.$store.dispatch("resetFollowList");
     this.$store.dispatch("suggestFollowUser");
+  },
+  mounted: function () {
+    this.scrollFetchFolowers();
   },
   components: {
     SearchItem,

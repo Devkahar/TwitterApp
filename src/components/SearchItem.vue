@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { BASE_URL, user_img, userProfilePath } from "@/helper/constants";
+import { getImgUrl, userProfilePath } from "@/helper/constants";
 import UsernameComponent from "@/components/UsernameComponent.vue";
 import SpinnerComponent from "./SpinnerComponent.vue";
 export default {
@@ -46,9 +46,9 @@ export default {
     },
     user_img: function () {
       if (this.profile_url) {
-        return `${BASE_URL}${this.profile_url}`;
+        return getImgUrl(this.profile_url);
       }
-      return `${BASE_URL}${user_img}`;
+      return getImgUrl(this.profile_url);
     },
   },
   components: {
