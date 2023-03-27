@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { BASE_URL, getUserName, ROUTES_CONSTANTS } from "@/helper/constants";
+import { getImgUrl, getUserName, ROUTES_CONSTANTS } from "@/helper/constants";
 
 export default {
   name: "LogoutComponent",
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     user_img: function () {
-      return `${BASE_URL}${this.$store.getters.user_img}`;
+      return getImgUrl(this.$store.getters.user_img);
     },
   },
 };

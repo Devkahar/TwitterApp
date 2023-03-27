@@ -73,7 +73,6 @@ const routes = [
     },
   },
 ];
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
@@ -86,6 +85,13 @@ router.beforeEach((to, from, next) => {
     user &&
     (to.name === ROUTES_CONSTANTS.SIGNUP_PAGE ||
       to.name === ROUTES_CONSTANTS.LOGIN_PAGE)
+  ) {
+    next({ name: ROUTES_CONSTANTS.HOME_PAGE });
+  }
+  if (
+    !user &&
+    (to.name === ROUTES_CONSTANTS.EDIT_PAGE ||
+      to.name === ROUTES_CONSTANTS.EDIT_PASSWORD_PAGE)
   ) {
     next({ name: ROUTES_CONSTANTS.HOME_PAGE });
   } else {
