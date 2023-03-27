@@ -2,7 +2,7 @@
   <div>
     <div
       :class="[
-        'w-full px-5 py-3 border-lighter flex justify-between',
+        'w-full px-32 py-3 border-lighter flex justify-between',
         fullBorder ? 'border' : 'border-b',
       ]"
     >
