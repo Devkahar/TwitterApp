@@ -4,7 +4,7 @@
     <div class="w-full rounded-lg bg-lightest">
       <div class="flex items-center justify-between p-3">
         <p class="text-lg font-bold">Trends for You</p>
-        <i class="fas fa-cog text-lg text-blue"></i>
+        <font-awesome-icon icon="fa-solid fa-gear" />
       </div>
       <button
         v-for="trend in trending"
@@ -23,7 +23,7 @@
             {{ trend.bottom }}
           </p>
         </div>
-        <i class="fas fa-angle-down text-lg text-dark"></i>
+        <font-awesome-icon icon class="fas fa-angle-down text-lg text-dark" />
       </button>
       <button
         class="p-3 w-full hover:bg-lighter text-left text-blue border-t border-lighter"

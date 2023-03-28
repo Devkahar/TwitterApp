@@ -5,7 +5,7 @@
         class="px-5 py-3 border-b border-lighter flex items-center justify-between"
       >
         <h1 class="text-xl font-bold">Home</h1>
-        <i class="far fa-star text-xl text-blue"></i>
+        <font-awesome-icon icon="fas fa-star" class="text-xl text-blue" />
       </div>
       <div class="bg-white">
         <CreateTweet v-if="isAuth" />

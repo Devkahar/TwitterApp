@@ -12,7 +12,10 @@
         <p class="text-sm font-bold leading-tight">{{ name }}</p>
         <p class="text-sm leading-tight">{{ user_name }}</p>
       </div>
-      <i class="hidden lg:block fas fa-angle-down ml-auto text-lg"></i>
+      <font-awesome-icon
+        icon="fas fa-angle-down "
+        class="hidden lg:block ml-auto text-lg"
+      />
     </button>
     <div
       v-if="dropdown === true"
@@ -30,7 +33,7 @@
           <p class="text-sm font-bold leading-tight">{{ name }}</p>
           <p class="text-sm leading-tight">{{ user_name }}</p>
         </div>
-        <i class="fas fa-check ml-auto test-blue"></i>
+        <font-awesome-icon icon="fas fa-check" class="ml-auto test-blue" />
       </button>
       <button
         @click="editProfile"

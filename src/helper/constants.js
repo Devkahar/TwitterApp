@@ -9,7 +9,7 @@ const ROUTES_CONSTANTS = {
 };
 
 const BASE_URL = "http://localhost:4000";
-const BASE_IMG = "https://todosmaker.s3.ap-south-1.amazonaws.com";
+const BASE_IMG = "http://localhost:4000/uploads";
 const userProfilePath = function (_id) {
   return `/user/${_id}/`;
 };

@@ -4,6 +4,59 @@ import router from "./router";
 import store from "./store";
 import "ant-design-vue/dist/antd.css";
 import "./assets/css/main.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+/* import font awesome icon component */
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+/* import specific icons */
+import {
+  // faTwitter,
+  faCircleUser,
+  faEllipsisH,
+  faBookBookmark,
+  faEnvelope,
+  faFlag,
+  faHouse,
+  faHashtag,
+  faHeart,
+  faList,
+  faBell,
+  faGear,
+  faRetweet,
+  faFilm,
+  faSmile,
+  faReply,
+  faStar,
+  faAngleDown,
+  faPlus,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
+/* add icons to the library */
+library.add(
+  faTwitter,
+  faCircleUser,
+  faEllipsisH,
+  faBell,
+  faGear,
+  faHouse,
+  faBookBookmark,
+  faEnvelope,
+  faFlag,
+  faHashtag,
+  faHeart,
+  faList,
+  faRetweet,
+  faReply,
+  faFilm,
+  faSmile,
+  faStar,
+  faAngleDown,
+  faPlus,
+  faCheck
+);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.config.productionTip = false;
+
 Vue.config.productionTip = false;
 import {
   Button,
@@ -19,6 +72,7 @@ import {
   Result,
 } from "ant-design-vue/lib";
 import UUID from "vue-uuid";
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component(Button.name, Button);
 Vue.component(Spin.name, Spin);
 Vue.component(Input.name, Input);
