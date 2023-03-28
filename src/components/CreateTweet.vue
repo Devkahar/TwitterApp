@@ -2,7 +2,7 @@
   <div>
     <div
       :class="[
-        'w-full px-5 py-3 border-lighter flex justify-between',
+        'w-full px-32 py-3 border-lighter flex justify-between',
         fullBorder ? 'border' : 'border-b',
       ]"
     >
@@ -41,9 +41,18 @@
               />
             </i>
 
-            <i class="text-lg text-blue mr-4 fas fa-film"></i>
-            <i class="text-lg text-blue mr-4 far fa-chart-bar"></i>
-            <i class="text-lg text-blue mr-4 far fa-smile"></i>
+            <font-awesome-icon
+              icon="fas fa-film"
+              class="text-lg text-blue mr-4"
+            />
+            <font-awesome-icon
+              icon="fas fa-chart-bar"
+              class="text-lg text-blue mr-4"
+            />
+            <font-awesome-icon
+              icon="fas fa-smile"
+              class="text-lg text-blue mr-4"
+            />
           </div>
           <ButtonComponent
             :click-handler="postTweetHandler"

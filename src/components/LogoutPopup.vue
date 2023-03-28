@@ -4,8 +4,13 @@
       @click="() => (dropdown = true)"
       class="flex items-center w-full hover:bg-lightblue rounded-full p-2 focus:outline-none"
     >
+
       <SearchItem :name="user_name" :profile_url="user_img" :border="false" />
-      <i class="hidden lg:block fas fa-angle-down ml-auto text-lg"></i>
+      <font-awesome-icon
+        icon="fas fa-angle-down "
+        class="hidden lg:block ml-auto text-lg"
+      />
+
     </button>
     <div
       v-if="dropdown === true"
@@ -16,7 +21,7 @@
         class="p-3 flex items-center w-full hover:bg-lightest p-2 focus:outline-none"
       >
         <SearchItem :name="user_name" :profile_url="user_img" :border="false" />
-        <i class="fas fa-check ml-auto test-blue"></i>
+        <font-awesome-icon icon="fas fa-check" class="ml-auto test-blue" />
       </button>
       <button
         @click="editProfile"
