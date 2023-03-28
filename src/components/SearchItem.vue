@@ -1,5 +1,10 @@
 <template>
-  <div class="w-full item flex flex-row p-2 border-b items-center">
+  <div
+    :class="[
+      'w-full item flex flex-row p-2 items-center',
+      border ? 'border-b' : '',
+    ]"
+  >
     <div v-if="default_comp" class="text-center w-full">
       <h3>No Users found</h3>
     </div>
@@ -87,6 +92,10 @@ export default {
     limitName: {
       type: Boolean,
       default: false,
+    },
+    border: {
+      type: Boolean,
+      default: true,
     },
   },
 };

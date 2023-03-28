@@ -8,7 +8,11 @@
       </div>
       <div class="img-content">
         <div class="back-cover w-full">
-          <img :src="backUrl" alt="" />
+          <img
+            src="https://media.licdn.com/dms/image/C4D12AQHMPBvE3avWzg/article-inline_image-shrink_1000_1488/0/1616872522462?e=1684972800&v=beta&t=6JApKuGeaiLZ0dZytB4qFSrf6Alo2GDJOJTiV7Q1-ns"
+            alt=""
+            class="w-full"
+          />
         </div>
         <div class="profile-img">
           <UserImage :url="data.image ?? ''" :large_img="true" />
