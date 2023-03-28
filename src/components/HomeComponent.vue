@@ -2,7 +2,7 @@
   <div class="home-container">
     <div class="home-head">
       <div
-        class="px-5 py-3 border-b border-lighter flex items-center justify-between"
+        class="px-4 py-3 border-b border-lighter flex items-center justify-between"
       >
         <h1 class="text-xl font-bold">Home</h1>
         <font-awesome-icon icon="fas fa-star" class="text-xl text-blue" />
@@ -42,7 +42,7 @@ export default {
   top: 0;
   background-color: #fff;
   z-index: 1000;
-  width: 40.8%;
+  width: 34rem;
 }
 .home-head--block {
   margin-bottom: 13rem;

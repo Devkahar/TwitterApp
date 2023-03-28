@@ -28,8 +28,10 @@ import {
   faReply,
   faStar,
   faAngleDown,
+  faChartBar,
   faPlus,
   faCheck,
+  faImage,
 } from "@fortawesome/free-solid-svg-icons";
 /* add icons to the library */
 library.add(
@@ -47,12 +49,14 @@ library.add(
   faList,
   faRetweet,
   faReply,
+  faChartBar,
   faFilm,
   faSmile,
   faStar,
   faAngleDown,
   faPlus,
-  faCheck
+  faCheck,
+  faImage
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;

@@ -30,8 +30,12 @@
           </div>
         </div>
         <div class="flex justify-between items-center w-full">
-          <div class="">
-            <i class="text-lg text-blue mr-4 far fa-image relative">
+          <div class="flex">
+            <div class="relative">
+              <font-awesome-icon
+                icon="fas fa-image"
+                class="text-lg text-blue mr-4"
+              />
               <input
                 type="file"
                 accept="image/jpeg/png/jpg"
@@ -39,7 +43,7 @@
                 @change="changeFileHandler"
                 id="uploadImage"
               />
-            </i>
+            </div>
 
             <font-awesome-icon
               icon="fas fa-film"
