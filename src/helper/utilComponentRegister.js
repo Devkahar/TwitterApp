@@ -12,6 +12,53 @@ import {
   Result,
 } from "ant-design-vue/lib";
 import UUID from "vue-uuid";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faCircleUser,
+  faEllipsisH,
+  faBookBookmark,
+  faEnvelope,
+  faFlag,
+  faHouse,
+  faHashtag,
+  faHeart,
+  faList,
+  faBell,
+  faGear,
+  faRetweet,
+  faFilm,
+  faSmile,
+  faReply,
+  faStar,
+  faAngleDown,
+  faPlus,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
+/* add icons to the library */
+library.add(
+  faTwitter,
+  faCircleUser,
+  faEllipsisH,
+  faBell,
+  faGear,
+  faHouse,
+  faBookBookmark,
+  faEnvelope,
+  faFlag,
+  faHashtag,
+  faHeart,
+  faList,
+  faRetweet,
+  faReply,
+  faFilm,
+  faSmile,
+  faStar,
+  faAngleDown,
+  faPlus,
+  faCheck
+);
 const registerComponnet = function (Vue) {
   Vue.component(Button.name, Button);
   Vue.component(Spin.name, Spin);
@@ -34,5 +81,6 @@ const registerComponnet = function (Vue) {
       console.log("[created] " + this.$options.name);
     },
   });
+  Vue.component("font-awesome-icon", FontAwesomeIcon);
 };
 export default registerComponnet;

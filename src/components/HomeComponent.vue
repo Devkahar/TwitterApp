@@ -43,7 +43,7 @@ export default {
   top: 0;
   background-color: #fff;
   z-index: 1000;
-  width: 40.8%;
+  width: 43rem;
 }
 .home-head--block {
   margin-bottom: 13rem;

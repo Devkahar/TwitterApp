@@ -4,13 +4,11 @@
       @click="() => (dropdown = true)"
       class="flex items-center w-full hover:bg-lightblue rounded-full p-2 focus:outline-none"
     >
-
       <SearchItem :name="user_name" :profile_url="user_img" :border="false" />
       <font-awesome-icon
         icon="fas fa-angle-down "
         class="hidden lg:block ml-auto text-lg"
       />
-
     </button>
     <div
       v-if="dropdown === true"
