@@ -4,14 +4,7 @@
       @click="() => (dropdown = true)"
       class="flex items-center w-full hover:bg-lightblue rounded-full p-2 focus:outline-none"
     >
-      <img
-        :src="user_img"
-        class="rounded w-10 h-10 rounded-full border border-lighter"
-      />
-      <div class="hidden lg:block ml-4">
-        <p class="text-sm font-bold leading-tight">{{ name }}</p>
-        <p class="text-sm leading-tight">{{ user_name }}</p>
-      </div>
+      <SearchItem :name="user_name" :profile_url="user_img" :border="false" />
       <font-awesome-icon
         icon="fas fa-angle-down "
         class="hidden lg:block ml-auto text-lg"
@@ -25,14 +18,7 @@
         @click="() => (dropdown = false)"
         class="p-3 flex items-center w-full hover:bg-lightest p-2 focus:outline-none"
       >
-        <img
-          :src="user_img"
-          class="w-10 h-10 rounded rounded-full border border-lighter"
-        />
-        <div class="ml-4">
-          <p class="text-sm font-bold leading-tight">{{ name }}</p>
-          <p class="text-sm leading-tight">{{ user_name }}</p>
-        </div>
+        <SearchItem :name="user_name" :profile_url="user_img" :border="false" />
         <font-awesome-icon icon="fas fa-check" class="ml-auto test-blue" />
       </button>
       <button
@@ -57,7 +43,8 @@
   </div>
 </template>
 <script>
-import { getImgUrl, getUserName, ROUTES_CONSTANTS } from "@/helper/constants";
+import { ROUTES_CONSTANTS } from "@/helper/constants";
+import SearchItem from "./SearchItem.vue";
 
 export default {
   name: "LogoutComponent",
@@ -65,7 +52,7 @@ export default {
     return {
       dropdown: false,
       name: this.$store.getters.user_name,
-      user_name: getUserName(this.$store.getters.user_name),
+      user_name: this.$store.getters.user_name,
     };
   },
   methods: {
@@ -82,8 +69,9 @@ export default {
   },
   computed: {
     user_img: function () {
-      return getImgUrl(this.$store.getters.user_img);
+      return this.$store.getters.user_img;
     },
   },
+  components: { SearchItem },
 };
 </script>

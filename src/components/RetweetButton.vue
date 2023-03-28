@@ -9,7 +9,7 @@
       xml:space="preserve"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      :fill="active ? 'red' : '#536471'"
+      :fill="active ? 'rgb(0, 186, 124)' : '#536471'"
     >
       <g id="Padding__x26__Artboard" />
       <g id="Icons">

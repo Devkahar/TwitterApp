@@ -11,7 +11,8 @@
         <CreateTweet v-if="isAuth" />
       </div>
     </div>
-    <div class="home-head--block"></div>
+    <div class="home-head--block" v-if="isAuth"></div>
+    <div class="mb-14" v-else></div>
     <FetchTweets />
   </div>
 </template>

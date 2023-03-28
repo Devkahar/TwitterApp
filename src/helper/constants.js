@@ -7,7 +7,9 @@ const ROUTES_CONSTANTS = {
   EDIT_PAGE: "editProfile",
   EDIT_PASSWORD_PAGE: "editPasswordPage",
 };
-
+// https://cyan-frightened-blackbuck.cyclic.app
+// http://localhost:4000
+// https://todosmaker.s3.ap-south-1.amazonaws.com
 const BASE_URL = "http://localhost:4000";
 const BASE_IMG = "http://localhost:4000/uploads";
 const userProfilePath = function (_id) {
