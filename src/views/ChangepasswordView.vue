@@ -7,7 +7,7 @@
       :message="message"
       :successHandler="changePassword"
       :error="error"
-      :buttonName="'Edit Info'"
+      :buttonName="'Change Password'"
       :getContext="setFormContext"
     />
   </div>
@@ -19,7 +19,7 @@ import axios from "axios";
 import { BASE_URL, ROUTES_CONSTANTS } from "@/helper/constants";
 import FormComonent from "@/components/FormComonent.vue";
 export default {
-  name: "EditProfile",
+  name: "ChangePassword",
   data: function () {
     return {
       error: false,

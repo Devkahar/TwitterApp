@@ -23,8 +23,8 @@ export default {
 </script>
 <style>
 .post_img_box {
-  max-width: 480px;
-  max-height: 750px;
+  max-width: 30em;
+  max-height: 46.875em;
   width: max-content;
   border-radius: 18px;
   -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);

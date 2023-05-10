@@ -1,11 +1,11 @@
-<template>
+<template functional>
   <a-button
     type="primary"
     shape="round"
-    @click="onClickHandler"
-    :loading="loading"
+    @click="props.clickHandler"
+    :loading="props.loading"
     size="large"
-    :html-type="htmlType"
+    :html-type="props.htmlType"
   >
     <slot> </slot>
   </a-button>

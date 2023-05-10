@@ -55,7 +55,7 @@
     </div>
     <Alert v-if="getError" title="Invalid Details" :message="getMessage" />
     <Button :clickHandler="handleSubmit" :loading="getLoading">{{
-      this.buttonName
+      buttonName
     }}</Button>
   </a-form>
 </template>

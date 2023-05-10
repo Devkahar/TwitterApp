@@ -246,8 +246,8 @@ export default {
   left: 0;
 }
 .post_img_box {
-  max-width: 510px;
-  max-height: 750px;
+  max-width: 31.875em;
+  max-height: 46.875em;
   width: max-content;
   border-radius: 18px;
   -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);

@@ -35,6 +35,8 @@ import {
   faAngleDown,
   faPlus,
   faCheck,
+  faChartBar,
+  faImage,
 } from "@fortawesome/free-solid-svg-icons";
 /* add icons to the library */
 library.add(
@@ -57,7 +59,9 @@ library.add(
   faStar,
   faAngleDown,
   faPlus,
-  faCheck
+  faCheck,
+  faChartBar,
+  faImage
 );
 const registerComponnet = function (Vue) {
   Vue.component(Button.name, Button);

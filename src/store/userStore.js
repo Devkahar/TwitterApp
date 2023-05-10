@@ -1,5 +1,5 @@
 import { user_img } from "@/helper/constants";
-
+let res;
 const userStore = {
   state: () => ({
     userInfo: JSON.parse(localStorage.getItem("userInfo"))

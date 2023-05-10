@@ -1,3 +1,10 @@
+
+@media only screen and (max-width: 1200px) {
+  html{
+    font-size: 10px;
+  }
+}
+
 .tweet-container {
   border: 1px solid #eee;
   height: 100vh;
@@ -14,8 +21,8 @@
   clip-path: circle(48%);
 }
 .post_img_box {
-  max-width: 510px;
-  max-height: 750px;
+  max-width: 31.875em;
+  max-height: 46.875em;
   width: max-content;
   border-radius: 18px;
   -webkit-box-shadow: -5px 6px 10px -15px rgba(0, 0, 0, 0.56);
@@ -30,12 +37,12 @@
   border-radius: 18px;
 }
 .post_img_box_small {
-  max-width: 200px;
-  max-height: 200px;
-  margin-left: 50px;
+  max-width: 12.5em;
+  max-height: 12.5em;
+  margin-left: 3.125em;
 }
 .post_img_box_small>img{
-  max-height: 200px;
+  max-height: 12.5em;
 }
 .cross {
   position: absolute;

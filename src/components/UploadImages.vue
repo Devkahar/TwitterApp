@@ -28,6 +28,3 @@ export default {
   },
 };
 </script>
-<style scoped></style>
-
-<!-- "text-lg text-blue mr-4 far fa-image" -->

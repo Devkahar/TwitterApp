@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="pt-4 pl-10 w-full" v-if="retwtted">
+    <!-- <div class="pt-4 pl-10 w-full" v-if="">
       <h1>Dev Kahar Retweeted</h1>
-    </div>
+    </div> -->
     <div class="p-5 flex border_bottom">
       <div class="w-1/12 pr-1">
         <UserImage :url="profile_url" />
@@ -194,7 +194,7 @@ export default {
   left: -290%;
   z-index: 10;
   background-color: #fff;
-  width: 120px;
+  width: 7.5em;
   border-radius: 10px;
 }
 .retweet_active {

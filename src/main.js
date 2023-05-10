@@ -8,8 +8,9 @@ import registerComponents from "./helper/utilComponentRegister";
 registerComponents(Vue);
 Vue.config.productionTip = false;
 
-new Vue({
+let app = new Vue({
   router,
   store,
   render: (h) => h(App),
 }).$mount("#app");
+console.log(app);

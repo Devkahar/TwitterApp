@@ -10,8 +10,8 @@ const ROUTES_CONSTANTS = {
 // https://cyan-frightened-blackbuck.cyclic.app
 // http://localhost:4000
 // https://todosmaker.s3.ap-south-1.amazonaws.com
-const BASE_URL = "http://localhost:4000";
-const BASE_IMG = "http://localhost:4000/uploads";
+const BASE_URL = "http://10.20.40.239:4000";
+const BASE_IMG = "http://10.20.40.239:4000/uploads";
 const userProfilePath = function (_id) {
   return `/user/${_id}/`;
 };
